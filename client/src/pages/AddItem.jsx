@@ -70,7 +70,7 @@ const AddItem = () => {
       if (response.ok) {
         // console.log('User registered successfully:', message);
         toast.success(message);
-        navigate("/login");
+        navigate("/menu");
       } else {
         toast.error(message);
       }
