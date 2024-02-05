@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Island+Moments&display-swap");
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.button {
+  padding: 10px 25px;
+  font-weight: 600;
+  cursor: pointer;
+  color: white;
+  border-radius: 8px;
+  background: #ff0000;
+  transition: 0.3s;
+}
+.buttonn {
+  padding: 10px 25px;
+  font-weight: 600;
+  cursor: pointer;
+  color: white;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.button:hover {
+  padding: 10px 25px;
+  font-weight: 600;
+  cursor: pointer;
+  color: white;
+  border-radius: 12px;
+  background: #820300;
+  transition: 0.3s;
+}
+
+.buttonn:hover {
+  padding: 10px 25px;
+  font-weight: 600;
+  cursor: pointer;
+  color: white;
+  border-radius: 12px;
+  transition: 0.3s;
+}
+
+.section {
+  background: linear-gradient(
+    to bottom right,
+    rgba(241, 168, 32, 0.7),
+    rgb(255, 255, 255)
+  );
+}
