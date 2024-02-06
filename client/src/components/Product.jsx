@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import { FaSquareMinus, FaSquarePlus } from "react-icons/fa6";
 import NewArrival from "./NewArrival";
+import { useCartContext } from "../context/cartContext";
 
 const Product = () => {
   // Get the id from the URL parameters
@@ -15,6 +16,7 @@ const Product = () => {
 
   // Initialize quantity state with a default value of 1
   const [quantity, setQuantity] = useState(1);
+  const { addToCart } = useCartContext();
 
   useEffect(() => {
     // Scroll to the top of the page when the component mounts or updates
@@ -23,6 +25,7 @@ const Product = () => {
       behavior: "smooth", // Smooth scrolling behavior
     });
   }, []);
+
   if (!food) {
     return <div>Loading...</div>;
   }
@@ -45,16 +48,17 @@ const Product = () => {
   };
 
   return (
-    <section className="py-3 px-10 sm:px-4 md:px-6 section">
+    <section className="py-3 px-2 sm:px-4 md:px-6 section">
       <div className="container mx-auto py-[14vh]">
-        <div className="grid grid-cols-1 relative lg:grid-cols-2 gap-8 py-8 items-center">
-          <div className="flex  justify-center items-center w-full">
+        <div className="grid grid-cols-1 px-6 relative lg:grid-cols-2 gap-8 py-8 items-center">
+          <div className="flex justify-center items-center w-full">
             <img
               src={food.image}
               alt="Home Page Pic"
-              className="max-h-[400px] rounded-lg"
+              className="h-[350px] max-w-full rounded-lg"
             />
           </div>
+
           <div className="flex flex-col gap-9">
             <div className="text-2xl md:text-3xl font-bold text-red lg:text-4xl">
               {food.name}
@@ -80,7 +84,10 @@ const Product = () => {
               Rs. <span className="text-4xl">{food.price}</span>
             </h2>
             <div className="gap-4 flex">
-              <button className="buttonn bg-orange hover:bg-orangehover w-full">
+              <button
+                onClick={() => addToCart(food)}
+                className="buttonn bg-orange hover:bg-orangehover w-full"
+              >
                 Add to Cart
               </button>
               <button className="button w-full">Order Now</button>

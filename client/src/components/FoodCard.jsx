@@ -27,11 +27,20 @@ const FoodCard = ({ item }) => {
 
       <div className="flex flex-col justify-between h-full">
         <div className="flex w-full px-4 items-center justify-between">
-          <p className="text-xl cursor-pointer text-center font-bold text-red">
+          <Link
+            to={`/menu/${item._id}`}
+            className="text-xl cursor-pointer text-center font-bold text-red"
+            onClick={() =>
+              window.scrollTo({
+                top: 0,
+                behavior: "smooth", // Smooth scrolling behavior
+              })
+            }
+          >
             {item.name.length > 15
               ? `${item.name.substring(0, 15)}...`
               : item.name}
-          </p>
+          </Link>
 
           <div className="flex items-center text-sm space-x-2 cursor-pointer">
             <span className="font-normal text-orange">4.5</span>

@@ -8,6 +8,7 @@ import { Route, Routes } from "react-router-dom";
 import AddItem from "./pages/AddItem";
 import Menu from "./pages/Menu";
 import Profile from "./pages/Profile";
+import Cart from "./pages/Cart";
 import Product from "./components/Product";
 
 const Layout = () => {
@@ -19,6 +20,7 @@ const Layout = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/menu/:id" element={<Product />} />
         <Route path="/add" element={<AddItem />} />
         <Route path="/menu" element={<Menu />} />

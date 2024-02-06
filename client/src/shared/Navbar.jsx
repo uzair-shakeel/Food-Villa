@@ -5,11 +5,14 @@ import { TiThMenu } from "react-icons/ti";
 import { IoClose } from "react-icons/io5";
 import { AuthContext } from "../context/authContext";
 import { toast } from "react-toastify";
+import { useCartContext } from "../context/cartContext";
 
 const Navbar = () => {
   const { user, dispatch } = useContext(AuthContext);
   const [nav, setNav] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const { cartItem } = useCartContext();
+
   const navigate = useNavigate();
 
   const toggleDropdown = () => {
@@ -80,7 +83,9 @@ const Navbar = () => {
                         d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                       />
                     </svg>
-                    <span className="badge badge-sm indicator-item">8</span>
+                    <span className="badge badge-sm indicator-item">
+                      {cartItem?.length}
+                    </span>
                   </div>
                 </div>
                 <div
@@ -88,12 +93,14 @@ const Navbar = () => {
                   className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
                 >
                   <div className="card-body">
-                    <span className="font-bold text-lg">8 Items</span>
-                    <span className="text-info">Subtotal: $999</span>
+                    <span className="font-bold text-lg">
+                      {cartItem?.length} Items
+                    </span>
+                    <span className="text-red">Subtotal: $999</span>
                     <div className="card-actions">
-                      <button className="btn btn-primary btn-block">
+                      <Link to={"/cart"} className="button w-full">
                         View cart
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>

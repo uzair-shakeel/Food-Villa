@@ -3,7 +3,7 @@ import logo from "../../assets/logo.png";
 
 const Footer = () => {
   return (
-    <footer className="flex justify-between bg-orange/40 p-10 bg-base-200 text-base-content">
+    <footer className="flex justify-between flex-col md:flex-row bg-orange/40 p-10 bg-base-200 text-base-content">
       <aside className="flex items-center flex-col text-center">
         <img src={logo} alt="" className="max-h-[130px] max-w-[130px]" />
 

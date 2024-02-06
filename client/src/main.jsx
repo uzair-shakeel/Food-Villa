@@ -6,19 +6,22 @@ import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContextProvider } from "./context/authContext.jsx";
+import { CartProvider } from "./context/cartContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthContextProvider>
-        <ToastContainer
-          position="top-center"
-          autoClose={2000}
-          pauseOnHover={true}
-          closeOnClick={true}
-          draggable={true}
-        />
-        <App />
+        <CartProvider>
+          <ToastContainer
+            position="top-center"
+            autoClose={2000}
+            pauseOnHover={true}
+            closeOnClick={true}
+            draggable={true}
+          />
+          <App />
+        </CartProvider>
       </AuthContextProvider>
     </BrowserRouter>
   </React.StrictMode>
