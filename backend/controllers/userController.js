@@ -99,3 +99,41 @@ exports.getUser = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+// Update user details
+exports.updateUser = async (req, res) => {
+  try {
+    const { name, email, gender, address, salutationPreference, profileImage } =
+      req.body;
+    const userId = req.body.userId; // Assuming userId is provided in the request body or can be obtained from the JWT token
+
+    // Find the user by ID
+    let user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update user data
+    user.name = name || user.name;
+    // Check if the provided email is different from the current email
+    if (email && email !== user.email) {
+      user.email = email;
+    }
+    user.gender = gender || user.gender;
+    user.address = address || user.address;
+    user.salutationPreference =
+      salutationPreference || user.salutationPreference;
+    user.profileImage = profileImage || user.profileImage;
+
+    // Save the updated user data
+    user = await user.save();
+
+    // Send the updated user details as a response
+    res
+      .status(200)
+      .json({ data: user, message: "User details updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};

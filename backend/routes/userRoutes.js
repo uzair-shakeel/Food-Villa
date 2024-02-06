@@ -9,5 +9,6 @@ router.post("/register", userController.registerUser);
 // Login user
 router.post("/login", userController.loginUser);
 router.get("/getUser", authMiddleware, userController.getUser);
+router.put("/update", authMiddleware, userController.updateUser);
 
 module.exports = router;

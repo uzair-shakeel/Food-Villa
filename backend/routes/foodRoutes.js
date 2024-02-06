@@ -11,6 +11,7 @@ const {
   getNewFood,
   getTopRatedFood,
   getEliteFood,
+  getFoodBySearch,
 } = require("../controllers/foodController");
 
 // Get all food items
@@ -18,6 +19,8 @@ router.get("/", getAllFoods);
 
 // Get a specific food item by ID
 router.get("/foods/:foodId", getFoodById);
+
+router.get("/search", getFoodBySearch);
 
 router.get("/top-rated", getTopRatedFood);
 

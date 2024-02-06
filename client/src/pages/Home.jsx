@@ -1,11 +1,13 @@
 import React from "react";
-import { FaSearch, FaHeart, FaStar } from "react-icons/fa";
 import FaqList from "../components/FAQ/FaqList";
 import HomePic from "../assets/Home.png";
 import ChefPic from "../assets/chef.png";
 import FaqPic from "../assets/faq.png";
 import RecommendedFood from "../components/RecommendedFood";
 import NewArrival from "../components/NewArrival";
+import SearchBar from "../shared/SearchBar";
+import Crousal from "../components/Crousal";
+
 const Home = () => {
   return (
     <>
@@ -25,22 +27,7 @@ const Home = () => {
                   dish is crafted with passion and precision."
                 </p>
               </div>
-              <div className="flex rounded-full py-2 px-4 justify-between items-center bg-white  shadow-md">
-                <div className="flex items-center w-full">
-                  <FaSearch size={15} className="text-gray" />
-                  <input
-                    type="text"
-                    placeholder="Burger..?"
-                    className="text-black w-full border-none outline-none py-2 px-4"
-                  />
-                </div>
-                <div className="h-10 w-10 cursor-pointer relative bg-orange rounded-full">
-                  <FaSearch
-                    size={20}
-                    className="cursor-pointer text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                  />
-                </div>
-              </div>
+              <SearchBar />
             </div>
 
             <div className="items-center">
@@ -55,6 +42,7 @@ const Home = () => {
       </section>
       {/* // Home Section ends */}
       {/* // Recommendation Section Starts */}
+      {/* <Crousal /> */}
       <NewArrival />
       {/* Recommendation Section Ends */}
       {/* Service Section Start */}

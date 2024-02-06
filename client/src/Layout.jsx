@@ -7,6 +7,8 @@ import Footer from "./components/Footer/Footer";
 import { Route, Routes } from "react-router-dom";
 import AddItem from "./pages/AddItem";
 import Menu from "./pages/Menu";
+import Profile from "./pages/Profile";
+import Product from "./components/Product";
 
 const Layout = () => {
   return (
@@ -16,6 +18,8 @@ const Layout = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/menu/:id" element={<Product />} />
         <Route path="/add" element={<AddItem />} />
         <Route path="/menu" element={<Menu />} />
       </Routes>

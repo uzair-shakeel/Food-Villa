@@ -11,7 +11,7 @@ exports.getAllFoods = async (req, res) => {
       query = { category: { $regex: new RegExp(category, "i") } };
     }
 
-    const foods = await Food.find(query);
+    const foods = await Food.find(query).sort({ createdAt: -1 });
 
     if (foods.length === 0) {
       return res
@@ -33,7 +33,7 @@ exports.getFoodById = async (req, res) => {
     if (!food) {
       return res.status(404).json({ message: "Food not found" });
     }
-    res.json(food);
+    res.json({ data: food, message: "Data Received" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error Get Single Food" });
@@ -104,7 +104,7 @@ exports.getTopRatedFood = async (req, res) => {
 // Controller to get new food items
 exports.getNewFood = async (req, res) => {
   try {
-    const newFoods = await Food.find().sort({ createdAt: -1 }).limit(4); // Assuming 'createdAt' is a field in your FoodSchema indicating the creation date
+    const newFoods = await Food.find().sort({ createdAt: -1 }).limit(8); // Assuming 'createdAt' is a field in your FoodSchema indicating the creation date
     if (newFoods.length === 0) {
       return res.status(404).json({ message: "No new food found" });
     }
@@ -128,5 +128,38 @@ exports.getEliteFood = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error from Low Prices" });
+  }
+};
+
+// Controller to search for food items by keyword
+exports.getFoodBySearch = async (req, res) => {
+  try {
+    const { keyword } = req.query;
+
+    if (!keyword) {
+      return res
+        .status(400)
+        .json({ message: "Keyword is required for search" });
+    }
+
+    const foods = await Food.find({
+      $or: [
+        { name: { $regex: new RegExp(keyword, "i") } },
+        { description: { $regex: new RegExp(keyword, "i") } },
+      ],
+    });
+
+    if (foods.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No food found matching the search criteria" });
+    }
+
+    res
+      .status(200)
+      .json({ data: foods, message: "Food search results received" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error from Food Search" });
   }
 };

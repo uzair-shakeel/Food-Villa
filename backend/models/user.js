@@ -29,7 +29,18 @@ const userSchema = new mongoose.Schema(
     profileImage: {
       type: String,
     },
-    // Add any other fields you need for your user model
+    gender: {
+      type: String,
+      enum: ["Male", "Female", "Other"],
+    },
+    address: {
+      type: String,
+    },
+    salutationPreference: {
+      type: String,
+      enum: ["Mr.", "Mrs.", "Ms."],
+      default: "Mr.",
+    },
   },
   {
     timestamps: true,

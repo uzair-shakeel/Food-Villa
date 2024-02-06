@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import useFetch from "../hooks/useFetch";
 import FoodCard from "../components/FoodCard";
+import Card from "../components/Card";
 
 const Menu = () => {
   // const [foods, setFoods] = useState([]);
@@ -9,7 +10,7 @@ const Menu = () => {
   const [value, setValue] = useState({
     id: 0,
     name: "All",
-    value: "all",
+    value: "",
   });
   const { apiData: foods, error } = useFetch(
     `http://localhost:3000/food?category=${value.value}`
