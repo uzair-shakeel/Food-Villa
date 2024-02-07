@@ -12,6 +12,9 @@ const Navbar = () => {
   const [nav, setNav] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { cartItem } = useCartContext();
+  const itemPrice = cartItem.reduce((a, c) => a * c.qty + c.price, 0);
+  // const DeliveryFee = 90;
+  // const totalPrice = itemPrice + DeliveryFee;
 
   const navigate = useNavigate();
 
@@ -96,7 +99,7 @@ const Navbar = () => {
                     <span className="font-bold text-lg">
                       {cartItem?.length} Items
                     </span>
-                    <span className="text-red">Subtotal: $999</span>
+                    <span className="text-red">Subtotal: {itemPrice}</span>
                     <div className="card-actions">
                       <Link to={"/cart"} className="button w-full">
                         View cart

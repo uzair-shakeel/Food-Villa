@@ -4,6 +4,7 @@ const cors = require("cors"); // Import the cors middleware
 const imageRoutes = require("./routes/imageRoute");
 const userRoutes = require("./routes/userRoutes");
 const foodRoutes = require("./routes/foodRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -27,6 +28,7 @@ app.use(express.json({ limit: "3mb" }));
 app.use("/images", imageRoutes);
 app.use("/user", userRoutes);
 app.use("/food", foodRoutes);
+app.use("/order", orderRoutes);
 
 // Start the server
 app.listen(PORT, () => {
