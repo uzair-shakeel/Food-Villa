@@ -1,12 +1,62 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { useCartContext } from "../context/cartContext";
 import CartFood from "../shared/CartFood";
+import { AuthContext } from "../context/authContext";
+import { toast } from "react-toastify";
 
 const Cart = () => {
+  const [address, setAddress] = useState("");
   const { cartItem, addToCart, removeFromCart } = useCartContext();
   const itemPrice = cartItem.reduce((a, c) => a * c.qty + c.price, 0);
   const DeliveryFee = 90;
   const totalPrice = itemPrice + DeliveryFee;
+  const { user, token } = useContext(AuthContext);
+
+  const handleAddressChange = (e) => {
+    setAddress(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      if (!token) {
+        toast.error("Please Sign In first");
+        return;
+      }
+
+      const product = cartItem?.map((item) => ({
+        product: item._id,
+        qty: item.qty,
+      }));
+
+      const response = await fetch(`http://localhost:3000/order`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+        },
+        body: JSON.stringify({
+          user: user._id,
+          product: product,
+          totalAmount: totalPrice,
+          shippingAddress: address,
+        }),
+      });
+
+      const result = await response.json();
+      console.log(result);
+
+      // if (response.ok) {
+      //   toast.success("Order successfully placed");
+      //   navigate("/booked");
+      // } else {
+      //   toast.error(result.message || "Failed to place order");
+      // }
+    } catch (err) {
+      toast.error("Server not responding");
+    }
+  };
 
   return (
     <div className="pt-14">
@@ -96,6 +146,8 @@ const Cart = () => {
               rows="2"
               className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
               placeholder="Enter your shipping address"
+              value={address} // Bind the value of the textarea to the state
+              onChange={handleAddressChange} // Call handleAddressChange on change
               required
             ></textarea>
           </div>
@@ -121,7 +173,7 @@ const Cart = () => {
           </div>
 
           {/* Proceed to Checkout Button */}
-          <button className="button" type="submit">
+          <button className="button" onClick={handleSubmit}>
             Confirm Order
           </button>
         </div>

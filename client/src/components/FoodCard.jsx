@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-import { FaSearch, FaHeart, FaStar } from "react-icons/fa";
+import { useCartContext } from "../context/cartContext";
+import { FaCartPlus, FaStar } from "react-icons/fa";
 
 const FoodCard = ({ item }) => {
+  const { addToCart } = useCartContext();
   return (
     <div className="food-card hover:scale-105 duration-100 cursor-default shadow-lg bg-gray/10 rounded-xl flex flex-col items-center overflow-hidden">
       <div className="relative mb-3 w-full">
@@ -13,7 +14,10 @@ const FoodCard = ({ item }) => {
 
         <div className="absolute top-2 left-2">
           <button className="shadow-md text-white bg-red hover:bg-redhover cursor-pointer p-5 rounded-full relative">
-            <FaHeart className="absolute text-xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+            <FaCartPlus
+              onClick={() => addToCart(item)}
+              className="absolute text-xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            />
           </button>
         </div>
         <div className="absolute bottom-2 right-0">
