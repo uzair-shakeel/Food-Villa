@@ -3,6 +3,13 @@ import React, { useState, useEffect } from "react";
 import useFetch from "../hooks/useFetch";
 import FoodCard from "../components/FoodCard";
 import Card from "../components/Card";
+import fastfood from "../assets/menu/Home.png";
+import desi from "../assets/menu/desi.png";
+import bbq from "../assets/menu/bbq.png";
+import chinese from "../assets/menu/chinese.png";
+import italian from "../assets/menu/italian.png";
+import desert from "../assets/menu/desert.png";
+import all from "../assets/menu/Home.png";
 
 const Menu = () => {
   // const [foods, setFoods] = useState([]);
@@ -16,13 +23,13 @@ const Menu = () => {
     `http://localhost:3000/food?category=${value.value}`
   );
   const categories = [
-    { id: 0, name: "All", value: "" },
-    { id: 1, name: "Fast Food", value: "fastFood" },
-    { id: 2, name: "BBQ", value: "bbq" },
-    { id: 3, name: "Chinese", value: "chinese" },
-    { id: 4, name: "Italian", value: "italian" },
-    { id: 5, name: "Desi", value: "desi" },
-    { id: 6, name: "Dessert", value: "dessert" },
+    { id: 0, name: "All", value: "", img: all },
+    { id: 1, name: "Fast Food", value: "fastFood", img: fastfood },
+    { id: 2, name: "BBQ", value: "bbq", img: bbq },
+    { id: 3, name: "Chinese", value: "chinese", img: chinese },
+    { id: 4, name: "Italian", value: "italian", img: italian },
+    { id: 5, name: "Desi", value: "desi", img: desi },
+    { id: 6, name: "Dessert", value: "dessert", img: desert },
   ];
 
   return (
@@ -43,6 +50,7 @@ const Menu = () => {
                   setValue(btn);
                 }}
               >
+                {/* <img src={btn.img} className=" h-[100px]" alt="" /> */}
                 {btn.name}
               </button>
             ))}

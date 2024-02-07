@@ -3,9 +3,11 @@ import { useCartContext } from "../context/cartContext";
 import CartFood from "../shared/CartFood";
 import { AuthContext } from "../context/authContext";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const [address, setAddress] = useState("");
+  const navigate = useNavigate();
   const { cartItem, addToCart, removeFromCart } = useCartContext();
   const itemPrice = cartItem.reduce((a, c) => a * c.qty + c.price, 0);
   const DeliveryFee = 90;
@@ -25,7 +27,7 @@ const Cart = () => {
         return;
       }
 
-      const product = cartItem?.map((item) => ({
+      const products = cartItem.map((item) => ({
         product: item._id,
         qty: item.qty,
       }));
@@ -38,21 +40,21 @@ const Cart = () => {
         },
         body: JSON.stringify({
           user: user._id,
-          product: product,
+          products: products,
           totalAmount: totalPrice,
           shippingAddress: address,
         }),
       });
 
       const result = await response.json();
-      console.log(result);
 
-      // if (response.ok) {
-      //   toast.success("Order successfully placed");
-      //   navigate("/booked");
-      // } else {
-      //   toast.error(result.message || "Failed to place order");
-      // }
+      if (response.ok) {
+        toast.success(result.message);
+        navigate("/orders");
+        location.reload();
+      } else {
+        toast.error(result.message);
+      }
     } catch (err) {
       toast.error("Server not responding");
     }

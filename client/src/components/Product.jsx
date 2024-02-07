@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import { FaSquareMinus, FaSquarePlus } from "react-icons/fa6";
 import NewArrival from "./NewArrival";
@@ -90,7 +90,13 @@ const Product = () => {
               >
                 Add to Cart
               </button>
-              <button className="button w-full">Order Now</button>
+              <Link
+                to={"/cart"}
+                className="button w-full text-center"
+                onClick={() => addToCart(food)}
+              >
+                Order Now
+              </Link>
             </div>
           </div>
         </div>

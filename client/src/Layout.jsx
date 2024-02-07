@@ -9,7 +9,9 @@ import AddItem from "./pages/AddItem";
 import Menu from "./pages/Menu";
 import Profile from "./pages/Profile";
 import Cart from "./pages/Cart";
+import MyOrders from "./pages/MyOrders";
 import Product from "./components/Product";
+import SearchPage from "./pages/SearchPage";
 
 const Layout = () => {
   return (
@@ -20,6 +22,8 @@ const Layout = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/orders" element={<MyOrders />} />
+        <Route path="/food/search" element={<SearchPage />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/menu/:id" element={<Product />} />
         <Route path="/add" element={<AddItem />} />

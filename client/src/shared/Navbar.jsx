@@ -18,10 +18,6 @@ const Navbar = () => {
 
   const navigate = useNavigate();
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
-
   const handleNav = () => {
     setNav(!nav);
   };
@@ -40,18 +36,12 @@ const Navbar = () => {
           <img src={logo} alt="" className="h-[60px] w-[60px] cursor-pointer" />
 
           <div className="md:flex gap-8 items-center hidden">
-            <a
-              href="#"
+            <Link
+              to={"/"}
               className="text-lg font-medium text-black hover:text-red-500"
             >
-              Specials
-            </a>
-            <a
-              href="#"
-              className="text-lg font-medium text-black hover:text-red-500"
-            >
-              About Us
-            </a>
+              Home
+            </Link>
             <Link
               to={"/menu"}
               className="text-lg font-medium text-black hover:text-red-500"
@@ -59,56 +49,64 @@ const Navbar = () => {
               Menu
             </Link>
             <Link
-              to={"/add"}
+              to={"/orders"}
               className="text-lg font-medium text-black hover:text-red-500"
             >
-              Add Item
+              My Orders
             </Link>
-            {user && (
-              <div className="dropdown dropdown-end">
-                <div
-                  tabIndex={0}
-                  role="button"
-                  className="btn btn-ghost btn-circle"
-                >
-                  <div className="indicator">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                      />
-                    </svg>
-                    <span className="badge badge-sm indicator-item">
-                      {cartItem?.length}
-                    </span>
-                  </div>
+            {user && user.role === "admin" && (
+              <Link
+                to={"/add"}
+                className="text-lg font-medium text-black hover:text-red-500"
+              >
+                Add Item
+              </Link>
+            )}
+
+            <div className="dropdown dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle"
+              >
+                <div className="indicator">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                    />
+                  </svg>
+                  <span className="badge badge-sm indicator-item">
+                    {cartItem?.length}
+                  </span>
                 </div>
-                <div
-                  tabIndex={0}
-                  className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
-                >
-                  <div className="card-body">
-                    <span className="font-bold text-lg">
-                      {cartItem?.length} Items
-                    </span>
-                    <span className="text-red">Subtotal: {itemPrice}</span>
-                    <div className="card-actions">
-                      <Link to={"/cart"} className="button w-full">
-                        View cart
-                      </Link>
-                    </div>
+              </div>
+              <div
+                tabIndex={0}
+                className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
+              >
+                <div className="card-body">
+                  <span className="font-bold text-lg">
+                    {cartItem?.length} Items
+                  </span>
+                  <span className="text-red">Subtotal: {itemPrice}</span>
+                  <div className="card-actions">
+                    <Link to={"/cart"} className="button w-full">
+                      View cart
+                    </Link>
                   </div>
                 </div>
               </div>
-            )}
+            </div>
+
             {user && (
               <div className="dropdown dropdown-end">
                 <div
@@ -128,16 +126,24 @@ const Navbar = () => {
                   className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
                 >
                   <li>
-                    <Link to={"/profile"} className="justify-between">
+                    <Link to={"/profile"} className="justify-between py-2 px-3">
                       Profile
                     </Link>
                   </li>
                   <li>
-                    <a>Settings</a>
+                    <Link to={"/orders"} className="justify-between py-2 px-3">
+                      My Orders
+                    </Link>
                   </li>
                   <li>
+                    <Link to={"/cart"} className="justify-between py-2 px-3">
+                      My Cart
+                    </Link>
+                  </li>
+
+                  <li>
                     <button
-                      className="buttonn bg-black hover:bg-black/70"
+                      className="buttonn bg-black my-2 hover:bg-black/70"
                       onClick={handleLogout}
                     >
                       Logout
@@ -153,12 +159,114 @@ const Navbar = () => {
             )}
           </div>
 
-          <div className="block md:hidden z-40" onClick={handleNav}>
-            {nav ? (
-              <IoClose size={27} className="cursor-pointer text-red-500" />
-            ) : (
-              <TiThMenu size={23} className="cursor-pointer" />
-            )}
+          <div className="flex gap-3 items-center justify-center md:hidden">
+            <div className="block md:hidden z-40">
+              {user && (
+                <div className="dropdown dropdown-end">
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    className="btn btn-ghost btn-circle"
+                  >
+                    <div className="indicator">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                        />
+                      </svg>
+                      <span className="badge badge-sm indicator-item">
+                        {cartItem?.length}
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    tabIndex={0}
+                    className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
+                  >
+                    <div className="card-body">
+                      <span className="font-bold text-lg">
+                        {cartItem?.length} Items
+                      </span>
+                      <span className="text-red">Subtotal: {itemPrice}</span>
+                      <div className="card-actions">
+                        <Link to={"/cart"} className="button w-full">
+                          View cart
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="block md:hidden z-40">
+              {user && (
+                <div className="dropdown dropdown-end">
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    className="btn btn-ghost btn-circle avatar"
+                  >
+                    <div className="w-10 rounded-full">
+                      <img
+                        alt="Tailwind CSS Navbar component"
+                        src={user.profileImage}
+                      />
+                    </div>
+                  </div>
+                  <ul
+                    tabIndex={0}
+                    className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+                  >
+                    <li>
+                      <Link
+                        to={"/profile"}
+                        className="justify-between py-2 px-3"
+                      >
+                        Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to={"/orders"}
+                        className="justify-between py-2 px-3"
+                      >
+                        My Orders
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to={"/cart"} className="justify-between py-2 px-3">
+                        My Cart
+                      </Link>
+                    </li>
+
+                    <li>
+                      <button
+                        className="buttonn bg-black my-2 hover:bg-black/70"
+                        onClick={handleLogout}
+                      >
+                        Logout
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+            <div className="block md:hidden z-40" onClick={handleNav}>
+              {nav ? (
+                <IoClose size={27} className="cursor-pointer text-red-500" />
+              ) : (
+                <TiThMenu size={23} className="cursor-pointer" />
+              )}
+            </div>
           </div>
 
           <div
@@ -167,32 +275,45 @@ const Navbar = () => {
             } mt-24 `}
           >
             <div className="flex gap-8 items-center justify-between flex-col">
-              <a
-                href="#"
-                className="text-md font-medium text-black hover:text-red-500"
-              >
-                Specials
-              </a>
-              <a
-                href="#"
+              <Link
+                to={"/"}
                 className="text-lg font-medium text-black hover:text-red-500"
               >
-                About Us
-              </a>
-              <a
-                href="#"
+                Home
+              </Link>
+              <Link
+                to={"/menu"}
                 className="text-lg font-medium text-black hover:text-red-500"
               >
                 Menu
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to={"/orders"}
                 className="text-lg font-medium text-black hover:text-red-500"
               >
-                Top Rated
-              </a>
+                My Orders
+              </Link>
+              {user && user.role === "admin" && (
+                <Link
+                  to={"/add"}
+                  className="text-lg font-medium text-black hover:text-red-500"
+                >
+                  Add Item
+                </Link>
+              )}
+              {user ? (
+                <button
+                  className="buttonn bg-black my-2 hover:bg-black/70"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              ) : (
+                <Link className="button" to={"/login"}>
+                  Login
+                </Link>
+              )}
 
-              <button className="btn">Login</button>
               {/* <Link
               to={"/"}
               className="text-xl font-medium text-black hover:text-red-700"

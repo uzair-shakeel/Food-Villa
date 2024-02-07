@@ -4,48 +4,18 @@ exports.createOrder = async (req, res) => {
   const { user, products } = req.body;
 
   try {
-    // Check if there is an existing pending order for the same user and product
-    const existingOrder = await Order.findOne({
-      user,
-      status: "pending",
-      "products.product": { $in: products.map((p) => p.product) },
+    const order = new Order(req.body);
+    await order.save();
+
+    res.status(201).json({
+      status: "success",
+      message: "Order created successfully",
+      data: order,
     });
-
-    if (existingOrder) {
-      // If order exists, update the quantity for the existing product
-      products.forEach(async (product) => {
-        const existingProduct = existingOrder.products.find((p) =>
-          p.product.equals(product.product)
-        );
-        if (existingProduct) {
-          existingProduct.qty += product.qty;
-        } else {
-          existingOrder.products.push(product);
-        }
-      });
-
-      await existingOrder.save();
-
-      res.status(200).json({
-        status: "success",
-        message: "Quantity updated for existing order",
-        data: existingOrder,
-      });
-    } else {
-      // If no existing order, create a new order
-      const order = new Order(req.body);
-      await order.save();
-
-      res.status(201).json({
-        status: "success",
-        message: "Order created successfully",
-        data: order,
-      });
-    }
   } catch (error) {
     res.status(400).json({
       status: "error",
-      message: "Failed to create or update order",
+      message: "Failed to create order",
       error: error.message,
     });
   }
@@ -54,6 +24,23 @@ exports.createOrder = async (req, res) => {
 exports.getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find().populate("user");
+    res.status(200).json({
+      status: "success",
+      message: "All orders fetched successfully",
+      data: orders,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: "Failed to fetch orders",
+      error: error.message,
+    });
+  }
+};
+exports.getOrdersById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const orders = await Order.find({ user: id });
     res.status(200).json({
       status: "success",
       message: "All orders fetched successfully",

@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import SearchPage from "../pages/SearchPage";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleSearch = async () => {
     setLoading(true);
@@ -13,12 +17,16 @@ const SearchBar = () => {
       const response = await fetch(
         `http://localhost:3000/food/search?keyword=${searchTerm}`
       );
-      if (!response.ok) {
-        throw new Error("Failed to fetch data");
+      const result = await response.json();
+      if (response.ok) {
+        navigate(`/food/search?keyword=${searchTerm}`, {
+          state: result.data,
+        });
       }
-      const data = await response.json();
-      setSearchResults(data.data);
-      console.log(searchResults);
+      if (!response.ok) {
+        toast.error(result.message);
+      }
+
       setLoading(false);
     } catch (error) {
       setError("An error occurred while fetching data");
@@ -48,15 +56,6 @@ const SearchBar = () => {
           className="cursor-pointer text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
         />
       </button>
-      {error && <p className="text-red-500">{error}</p>}
-      {loading && <p>Loading...</p>}
-      {searchResults.length > 0 && (
-        <ul>
-          {searchResults.map((food) => (
-            <li key={food._id}>{food.name}</li>
-          ))}
-        </ul>
-      )}
     </div>
   );
 };
