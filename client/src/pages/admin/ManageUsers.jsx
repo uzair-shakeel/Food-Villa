@@ -9,10 +9,11 @@ const ManageUsers = () => {
   const [tab, setTab] = useState("");
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
-  const { token } = useContext(AuthContext);
+  // const { token } = useContext(AuthContext);
   console.log(users);
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
     const fetchUsers = async () => {
       try {
         const response = await fetch(
@@ -79,8 +80,7 @@ const ManageUsers = () => {
               </div>
 
               <h2 className="font-semibold text-2xl">
-                {users?.data?.length || 0}{" "}
-                {tab === "admin" ? "Admins" : "Users"}
+                {users?.data?.length || 0} {tab === "admin" ? "Admin" : "Users"}
               </h2>
             </div>
             <div className="mt-10 flex mb-5 text-black/80">

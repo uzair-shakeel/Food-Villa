@@ -23,7 +23,11 @@ exports.createOrder = async (req, res) => {
 
 exports.getAllOrders = async (req, res) => {
   try {
-    const orders = await Order.find()
+    const status = req.query.status;
+
+    const filter = status ? { status } : {};
+
+    const orders = await Order.find(filter)
       .sort({ createdAt: -1 })
       .populate("user")
       .populate("products.product");
@@ -95,6 +99,49 @@ exports.getDeliveredOrders = async (req, res) => {
     res.status(500).json({
       status: "error",
       message: "Failed to fetch delivered orders",
+      error: error.message,
+    });
+  }
+};
+
+exports.updateOrder = async (req, res) => {
+  const orderId = req.params.id; // Extract the order ID from request params
+  const updatedData = req.body; // Extract updated data from request body
+
+  try {
+    // Find the order by ID
+    let order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(404).json({
+        status: "fail",
+        message: "Order not found",
+      });
+    }
+
+    // Check if the 'status' field exists in the updatedData
+    if (!updatedData.hasOwnProperty("status")) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Status field is required for updating the order",
+      });
+    }
+
+    // Update the order with the received status
+    order.status = updatedData.status;
+    await order.save();
+
+    // Return success response with updated order data
+    res.status(200).json({
+      status: "success",
+      message: "Order status updated successfully",
+      data: order,
+    });
+  } catch (error) {
+    // Handle errors
+    res.status(500).json({
+      status: "error",
+      message: "Failed to update order",
       error: error.message,
     });
   }

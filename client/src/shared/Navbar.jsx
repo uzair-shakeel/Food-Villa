@@ -400,13 +400,27 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to={"/orders"} className="justify-between py-2 px-3">
+                    <Link
+                      to={"/manage-orders"}
+                      className="justify-between py-2 px-3"
+                    >
                       Manage Orders
                     </Link>
                   </li>
                   <li>
-                    <Link to={"/cart"} className="justify-between py-2 px-3">
+                    <Link
+                      to={"/manage-items"}
+                      className="justify-between py-2 px-3"
+                    >
                       Manage Items
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={"/manage-users"}
+                      className="justify-between py-2 px-3"
+                    >
+                      Manage Users
                     </Link>
                   </li>
 
