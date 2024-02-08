@@ -137,3 +137,31 @@ exports.updateUser = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+exports.getAllUsers = async (req, res) => {
+  try {
+    // Extract role from request query or body
+    const { role } = req.query || req.body;
+
+    // Define query filter based on role
+    const queryFilter = role ? { role } : {};
+
+    // Find all users if no role is provided
+    const users = role
+      ? await User.find(queryFilter)
+      : await User.find().sort({ createdAt: -1 });
+
+    // Check if there are no users
+    if (!users || users.length === 0) {
+      return res.status(404).json({ message: "No users found" });
+    }
+
+    // Send the list of users as a response
+    res
+      .status(200)
+      .json({ data: users, message: "Users retrieved successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};

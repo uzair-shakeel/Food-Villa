@@ -31,183 +31,87 @@ const Navbar = () => {
   };
   return (
     <div className="bg-white/70 shadow-md fixed top-0 left-0 w-full z-40 ease-in duration-300 backdrop-blur-md">
-      <div className="py-1 px-10 sm:px-4 md:px-6 lg:px-6">
-        <div className="container mx-auto flex items-center justify-between ">
-          <img src={logo} alt="" className="h-[60px] w-[60px] cursor-pointer" />
+      {user && user.role === "admin" ? null : (
+        <div className="userNav py-1 px-10 sm:px-4 md:px-6 lg:px-6 ">
+          <div className="container mx-auto flex items-center justify-between ">
+            <img
+              src={logo}
+              alt=""
+              className="h-[60px] w-[60px] cursor-pointer"
+            />
 
-          <div className="md:flex gap-8 items-center hidden">
-            <Link
-              to={"/"}
-              className="text-lg font-medium text-black hover:text-red-500"
-            >
-              Home
-            </Link>
-            <Link
-              to={"/menu"}
-              className="text-lg font-medium text-black hover:text-red-500"
-            >
-              Menu
-            </Link>
-            <Link
-              to={"/orders"}
-              className="text-lg font-medium text-black hover:text-red-500"
-            >
-              My Orders
-            </Link>
-            {user && user.role === "admin" && (
+            <div className="md:flex gap-8 items-center hidden">
               <Link
-                to={"/add"}
-                className="text-lg font-medium text-black hover:text-red-500"
+                to={"/"}
+                className="text-lg active:scale-90 duration-100 font-medium text-black hover:text-red-500"
               >
-                Add Item
+                Home
               </Link>
-            )}
-
-            <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost btn-circle"
+              <Link
+                to={"/menu"}
+                className="text-lg font-medium active:scale-90 duration-100 text-black hover:text-red-500"
               >
-                <div className="indicator">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                    />
-                  </svg>
-                  <span className="badge badge-sm indicator-item">
-                    {cartItem?.length}
-                  </span>
-                </div>
-              </div>
-              <div
-                tabIndex={0}
-                className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
+                Menu
+              </Link>
+              <Link
+                to={"/orders"}
+                className="text-lg font-medium text-black active:scale-90 duration-100 hover:text-red-500"
               >
-                <div className="card-body">
-                  <span className="font-bold text-lg">
-                    {cartItem?.length} Items
-                  </span>
-                  <span className="text-red">Subtotal: {itemPrice}</span>
-                  <div className="card-actions">
-                    <Link to={"/cart"} className="button w-full">
-                      View cart
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
+                My Orders
+              </Link>
+              {user && user.role === "admin" && (
+                <Link
+                  to={"/add"}
+                  className="text-lg font-medium text-black hover:text-red-500"
+                >
+                  Add Item
+                </Link>
+              )}
 
-            {user && (
               <div className="dropdown dropdown-end">
                 <div
                   tabIndex={0}
                   role="button"
-                  className="btn btn-ghost btn-circle avatar"
+                  className="btn btn-ghost btn-circle"
                 >
-                  <div className="w-10 rounded-full">
-                    <img
-                      alt="Tailwind CSS Navbar component"
-                      src={user.profileImage}
-                    />
-                  </div>
-                </div>
-                <ul
-                  tabIndex={0}
-                  className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-                >
-                  <li>
-                    <Link to={"/profile"} className="justify-between py-2 px-3">
-                      Profile
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to={"/orders"} className="justify-between py-2 px-3">
-                      My Orders
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to={"/cart"} className="justify-between py-2 px-3">
-                      My Cart
-                    </Link>
-                  </li>
-
-                  <li>
-                    <button
-                      className="buttonn bg-black my-2 hover:bg-black/70"
-                      onClick={handleLogout}
+                  <div className="indicator">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
                     >
-                      Logout
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            )}
-            {user ? null : (
-              <Link to={"/login"} className="button">
-                Login
-              </Link>
-            )}
-          </div>
-
-          <div className="flex gap-3 items-center justify-center md:hidden">
-            <div className="block md:hidden z-40">
-              {user && (
-                <div className="dropdown dropdown-end">
-                  <div
-                    tabIndex={0}
-                    role="button"
-                    className="btn btn-ghost btn-circle"
-                  >
-                    <div className="indicator">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                        />
-                      </svg>
-                      <span className="badge badge-sm indicator-item">
-                        {cartItem?.length}
-                      </span>
-                    </div>
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                      />
+                    </svg>
+                    <span className="badge badge-sm indicator-item">
+                      {cartItem?.length}
+                    </span>
                   </div>
-                  <div
-                    tabIndex={0}
-                    className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
-                  >
-                    <div className="card-body">
-                      <span className="font-bold text-lg">
-                        {cartItem?.length} Items
-                      </span>
-                      <span className="text-red">Subtotal: {itemPrice}</span>
-                      <div className="card-actions">
-                        <Link to={"/cart"} className="button w-full">
-                          View cart
-                        </Link>
-                      </div>
+                </div>
+                <div
+                  tabIndex={0}
+                  className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
+                >
+                  <div className="card-body">
+                    <span className="font-bold text-lg">
+                      {cartItem?.length} Items
+                    </span>
+                    <span className="text-red">Subtotal: {itemPrice}</span>
+                    <div className="card-actions">
+                      <Link to={"/cart"} className="button w-full">
+                        View cart
+                      </Link>
                     </div>
                   </div>
                 </div>
-              )}
-            </div>
-            <div className="block md:hidden z-40">
+              </div>
+
               {user && (
                 <div className="dropdown dropdown-end">
                   <div
@@ -259,71 +163,413 @@ const Navbar = () => {
                   </ul>
                 </div>
               )}
-            </div>
-            <div className="block md:hidden z-40" onClick={handleNav}>
-              {nav ? (
-                <IoClose size={27} className="cursor-pointer text-red-500" />
-              ) : (
-                <TiThMenu size={23} className="cursor-pointer" />
-              )}
-            </div>
-          </div>
-
-          <div
-            className={`lg:hidden absolute w-1/2 sm:w-2/5 h-screen px-4 py-2 text-xl font-medium ease-in shadow-sm backdrop-blur-md bg-white/70 top-0 duration-500 ${
-              nav ? "right-0" : "right-[-100%]"
-            } mt-24 `}
-          >
-            <div className="flex gap-8 items-center justify-between flex-col">
-              <Link
-                to={"/"}
-                className="text-lg font-medium text-black hover:text-red-500"
-              >
-                Home
-              </Link>
-              <Link
-                to={"/menu"}
-                className="text-lg font-medium text-black hover:text-red-500"
-              >
-                Menu
-              </Link>
-              <Link
-                to={"/orders"}
-                className="text-lg font-medium text-black hover:text-red-500"
-              >
-                My Orders
-              </Link>
-              {user && user.role === "admin" && (
-                <Link
-                  to={"/add"}
-                  className="text-lg font-medium text-black hover:text-red-500"
-                >
-                  Add Item
-                </Link>
-              )}
-              {user ? (
-                <button
-                  className="buttonn bg-black my-2 hover:bg-black/70"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </button>
-              ) : (
-                <Link className="button" to={"/login"}>
+              {user ? null : (
+                <Link to={"/login"} className="button">
                   Login
                 </Link>
               )}
+            </div>
 
-              {/* <Link
+            <div className="flex gap-3 items-center justify-center md:hidden">
+              <div className="block md:hidden z-40">
+                {user && (
+                  <div className="dropdown dropdown-end">
+                    <div
+                      tabIndex={0}
+                      role="button"
+                      className="btn btn-ghost btn-circle"
+                    >
+                      <div className="indicator">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                          />
+                        </svg>
+                        <span className="badge badge-sm indicator-item">
+                          {cartItem?.length}
+                        </span>
+                      </div>
+                    </div>
+                    <div
+                      tabIndex={0}
+                      className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
+                    >
+                      <div className="card-body">
+                        <span className="font-bold text-lg">
+                          {cartItem?.length} Items
+                        </span>
+                        <span className="text-red">Subtotal: {itemPrice}</span>
+                        <div className="card-actions">
+                          <Link to={"/cart"} className="button w-full">
+                            View cart
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="block md:hidden z-40">
+                {user && (
+                  <div className="dropdown dropdown-end">
+                    <div
+                      tabIndex={0}
+                      role="button"
+                      className="btn btn-ghost btn-circle avatar"
+                    >
+                      <div className="w-10 rounded-full">
+                        <img
+                          alt="Tailwind CSS Navbar component"
+                          src={user.profileImage}
+                        />
+                      </div>
+                    </div>
+                    <ul
+                      tabIndex={0}
+                      className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+                    >
+                      <li>
+                        <Link
+                          to={"/profile"}
+                          className="justify-between py-2 px-3"
+                        >
+                          Profile
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to={"/orders"}
+                          className="justify-between py-2 px-3"
+                        >
+                          My Orders
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to={"/cart"}
+                          className="justify-between py-2 px-3"
+                        >
+                          My Cart
+                        </Link>
+                      </li>
+
+                      <li>
+                        <button
+                          className="buttonn bg-black my-2 hover:bg-black/70"
+                          onClick={handleLogout}
+                        >
+                          Logout
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+              <div className="block md:hidden z-40" onClick={handleNav}>
+                {nav ? (
+                  <IoClose size={27} className="cursor-pointer text-red-500" />
+                ) : (
+                  <TiThMenu size={23} className="cursor-pointer" />
+                )}
+              </div>
+            </div>
+
+            <div
+              className={`lg:hidden absolute w-1/2 sm:w-2/5 h-screen px-4 py-2 text-xl font-medium ease-in shadow-sm backdrop-blur-md bg-white/80 top-0 duration-300 ${
+                nav ? "right-0" : "right-[-100%]"
+              } pt-40 `}
+            >
+              <div className="flex gap-8 items-center justify-between flex-col">
+                <Link
+                  to={"/"}
+                  className="text-lg font-medium text-black hover:text-red-500"
+                >
+                  Home
+                </Link>
+                <Link
+                  to={"/menu"}
+                  className="text-lg font-medium text-black hover:text-red-500"
+                >
+                  Menu
+                </Link>
+                <Link
+                  to={"/orders"}
+                  className="text-lg font-medium text-black hover:text-red-500"
+                >
+                  My Orders
+                </Link>
+                {user && user.role === "admin" && (
+                  <Link
+                    to={"/add"}
+                    className="text-lg font-medium text-black hover:text-red-500"
+                  >
+                    Add Item
+                  </Link>
+                )}
+                {user ? (
+                  <button
+                    className="buttonn bg-black my-2 hover:bg-black/70"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                ) : (
+                  <Link className="button" to={"/login"}>
+                    Login
+                  </Link>
+                )}
+
+                {/* <Link
               to={"/"}
               className="text-xl font-medium text-black hover:text-red-700"
             >
               Specials
             </Link> */}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
+
+      {user && user.role === "admin" ? (
+        <div className="py-1 px-10 sm:px-4 md:px-6 lg:px-6">
+          <div className="container mx-auto flex items-center justify-between ">
+            <img
+              src={logo}
+              alt=""
+              className="h-[60px] w-[60px] cursor-pointer"
+            />
+
+            <div className="md:flex gap-8 items-center hidden">
+              <Link
+                to={"/manage-orders"}
+                className="text-lg active:scale-90 duration-100 font-medium text-black hover:text-red-500"
+              >
+                Manage Orders
+              </Link>
+              <Link
+                to={"/manage-users"}
+                className="text-lg font-medium active:scale-90 duration-100 text-black hover:text-red-500"
+              >
+                Manage Users
+              </Link>
+              <Link
+                to={"/manage-items"}
+                className="text-lg font-medium text-black active:scale-90 duration-100 hover:text-red-500"
+              >
+                Manage Items
+              </Link>
+              {user && user.role === "admin" && (
+                <Link
+                  to={"/add"}
+                  className="text-lg font-medium  active:scale-90 duration-100 text-black hover:text-red-500"
+                >
+                  Add Item
+                </Link>
+              )}
+
+              <div className="dropdown dropdown-end">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost btn-circle avatar"
+                >
+                  <div className="w-10 rounded-full">
+                    <img
+                      alt="Tailwind CSS Navbar component"
+                      src={user.profileImage}
+                    />
+                  </div>
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+                >
+                  <li>
+                    <Link to={"/profile"} className="justify-between py-2 px-3">
+                      Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to={"/orders"} className="justify-between py-2 px-3">
+                      Manage Orders
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to={"/cart"} className="justify-between py-2 px-3">
+                      Manage Items
+                    </Link>
+                  </li>
+
+                  <li>
+                    <button
+                      className="buttonn bg-black my-2 hover:bg-black/70"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="flex gap-3 items-center justify-center md:hidden">
+              <div className="block md:hidden z-40">
+                <div className="dropdown dropdown-end">
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    className="btn btn-ghost btn-circle avatar"
+                  >
+                    <div className="w-10 rounded-full">
+                      <img
+                        alt="Tailwind CSS Navbar component"
+                        src={user.profileImage}
+                      />
+                    </div>
+                  </div>
+                  <ul
+                    tabIndex={0}
+                    className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+                  >
+                    <li>
+                      <Link
+                        to={"/profile"}
+                        className="justify-between py-2 px-3"
+                      >
+                        Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to={"/orders"}
+                        className="justify-between py-2 px-3"
+                      >
+                        Manage Orders
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to={"/cart"} className="justify-between py-2 px-3">
+                        Manage Items
+                      </Link>
+                    </li>
+
+                    <li>
+                      <button
+                        className="buttonn bg-black my-2 hover:bg-black/70"
+                        onClick={handleLogout}
+                      >
+                        Logout
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div className="block md:hidden z-40" onClick={handleNav}>
+                {nav ? (
+                  <IoClose size={27} className="cursor-pointer text-red-500" />
+                ) : (
+                  <TiThMenu size={23} className="cursor-pointer" />
+                )}
+              </div>
+            </div>
+
+            <div
+              className={`lg:hidden absolute w-1/2 sm:w-2/5 h-screen px-4 py-2 text-xl font-medium ease-in shadow-sm backdrop-blur-md bg-white/80 top-0 duration-300 ${
+                nav ? "right-0" : "right-[-100%]"
+              } pt-40 `}
+            >
+              <div className="md:flex gap-8 items-center hidden">
+                <Link
+                  to={"/"}
+                  className="text-lg active:scale-75 duration-100 font-medium text-black hover:text-red-500"
+                >
+                  Manage Orders
+                </Link>
+                <Link
+                  to={"/menu"}
+                  className="text-lg font-medium active:scale-75 duration-100 text-black hover:text-red-500"
+                >
+                  Manage Users
+                </Link>
+                <Link
+                  to={"/orders"}
+                  className="text-lg font-medium text-black active:scale-75 duration-100 hover:text-red-500"
+                >
+                  Manage Items
+                </Link>
+                {user && user.role === "admin" && (
+                  <Link
+                    to={"/add"}
+                    className="text-lg font-medium text-black hover:text-red-500"
+                  >
+                    Add Item
+                  </Link>
+                )}
+
+                <div className="dropdown dropdown-end">
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    className="btn btn-ghost btn-circle avatar"
+                  >
+                    <div className="w-10 rounded-full">
+                      <img
+                        alt="Tailwind CSS Navbar component"
+                        src={user.profileImage}
+                      />
+                    </div>
+                  </div>
+                  <ul
+                    tabIndex={0}
+                    className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+                  >
+                    <li>
+                      <Link
+                        to={"/profile"}
+                        className="justify-between py-2 px-3"
+                      >
+                        Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to={"/orders"}
+                        className="justify-between py-2 px-3"
+                      >
+                        Manage Orders
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to={"/cart"} className="justify-between py-2 px-3">
+                        Manage Items
+                      </Link>
+                    </li>
+
+                    <li>
+                      <button
+                        className="buttonn bg-black my-2 hover:bg-black/70"
+                        onClick={handleLogout}
+                      >
+                        Logout
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };

@@ -14,7 +14,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <AuthContextProvider>
         <CartProvider>
           <ToastContainer
-            position="top-center"
+            position="top-right"
             autoClose={2000}
             pauseOnHover={true}
             closeOnClick={true}

@@ -6,9 +6,13 @@ import { AuthContext } from "../context/authContext";
 
 const MyOrders = () => {
   const { user } = useContext(AuthContext);
-  const { apiData: orders, error } = useFetch(
-    `http://localhost:3000/order/ordersbyid/${user._id}`
-  );
+  if (!user || user === "null" || user === "undefined") {
+    orders = [];
+  } else {
+    var { apiData: orders, error } = useFetch(
+      `http://localhost:3000/order/ordersbyid/${user._id}`
+    );
+  }
 
   return (
     <div className="pt-14">
@@ -21,6 +25,12 @@ const MyOrders = () => {
                 {orders?.length || 0} items
               </h2>
             </div>
+            {user === "null" && (
+              <p className="text-red font-bold text-center">
+                Login to see your Orders
+              </p>
+            )}
+
             <div className="mt-10 flex mb-5 text-black/80">
               <h3 className="font-semibold text- text-sm uppercase w-3/5">
                 No. of Items

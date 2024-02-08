@@ -12,6 +12,9 @@ import Cart from "./pages/Cart";
 import MyOrders from "./pages/MyOrders";
 import Product from "./components/Product";
 import SearchPage from "./pages/SearchPage";
+import ManageItems from "./pages/admin/ManageItems";
+import ManageUsers from "./pages/admin/ManageUsers";
+import ManageOrders from "./pages/admin/ManageOrders";
 
 const Layout = () => {
   return (
@@ -23,6 +26,9 @@ const Layout = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/orders" element={<MyOrders />} />
+        <Route path="/manage-items" element={<ManageItems />} />
+        <Route path="/manage-users" element={<ManageUsers />} />
+        <Route path="/manage-orders" element={<ManageOrders />} />
         <Route path="/food/search" element={<SearchPage />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/menu/:id" element={<Product />} />

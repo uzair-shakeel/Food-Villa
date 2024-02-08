@@ -22,38 +22,38 @@ const Cart = () => {
     e.preventDefault();
 
     try {
-      if (!token) {
+      if (token === "null" || token === "undefined" || token === "" || !token) {
+        navigate("/login");
         toast.error("Please Sign In first");
-        return;
-      }
-
-      const products = cartItem.map((item) => ({
-        product: item._id,
-        qty: item.qty,
-      }));
-
-      const response = await fetch(`http://localhost:3000/order`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Include the token in the Authorization header
-        },
-        body: JSON.stringify({
-          user: user._id,
-          products: products,
-          totalAmount: totalPrice,
-          shippingAddress: address,
-        }),
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        toast.success(result.message);
-        navigate("/orders");
-        location.reload();
       } else {
-        toast.error(result.message);
+        const products = cartItem.map((item) => ({
+          product: item._id,
+          qty: item.qty,
+        }));
+
+        const response = await fetch(`http://localhost:3000/order`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+          },
+          body: JSON.stringify({
+            user: user._id,
+            products: products,
+            totalAmount: totalPrice,
+            shippingAddress: address,
+          }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          toast.success(result.message);
+          navigate("/orders");
+          location.reload();
+        } else {
+          toast.error(result.message);
+        }
       }
     } catch (err) {
       toast.error("Server not responding");

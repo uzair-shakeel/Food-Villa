@@ -23,7 +23,10 @@ exports.createOrder = async (req, res) => {
 
 exports.getAllOrders = async (req, res) => {
   try {
-    const orders = await Order.find().populate("user");
+    const orders = await Order.find()
+      .sort({ createdAt: -1 })
+      .populate("user")
+      .populate("products.product");
     res.status(200).json({
       status: "success",
       message: "All orders fetched successfully",
@@ -40,7 +43,7 @@ exports.getAllOrders = async (req, res) => {
 exports.getOrdersById = async (req, res) => {
   try {
     const id = req.params.id;
-    const orders = await Order.find({ user: id });
+    const orders = await Order.find({ user: id }).sort({ createdAt: -1 });
     res.status(200).json({
       status: "success",
       message: "All orders fetched successfully",
