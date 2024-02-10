@@ -65,6 +65,15 @@ const ManageUsers = () => {
                     Pending
                   </button>
                   <button
+                    onClick={() => setStatus("processing")}
+                    className={`${
+                      status === "processing" &&
+                      "bg-orange text-white font-bold"
+                    } p-2 mr-5 px-5 rounded-md text-HeadingColor font-semibold text-[16px] leading-7 border border-solid border-Color`}
+                  >
+                    Processing
+                  </button>
+                  <button
                     onClick={() => setStatus("completed")}
                     className={`${
                       status === "completed" && "bg-orange text-white font-bold"
@@ -79,15 +88,6 @@ const ManageUsers = () => {
                     } p-2 mr-5 px-5 rounded-md text-HeadingColor font-semibold text-[16px] leading-7 border border-solid border-Color`}
                   >
                     Cancelled
-                  </button>
-                  <button
-                    onClick={() => setStatus("processing")}
-                    className={`${
-                      status === "processing" &&
-                      "bg-orange text-white font-bold"
-                    } p-2 mr-5 px-5 rounded-md text-HeadingColor font-semibold text-[16px] leading-7 border border-solid border-Color`}
-                  >
-                    Processing
                   </button>
                 </div>
               </div>

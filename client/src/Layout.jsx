@@ -16,6 +16,7 @@ import ManageItems from "./pages/admin/ManageItems";
 import ManageUsers from "./pages/admin/ManageUsers";
 import ManageOrders from "./pages/admin/ManageOrders";
 import EditItem from "./pages/admin/EditItem";
+import Dashboard from "./pages/admin/Dashboard";
 
 const Layout = () => {
   return (
@@ -32,6 +33,7 @@ const Layout = () => {
         <Route path="/manage-items" element={<ManageItems />} />
         <Route path="/manage-users" element={<ManageUsers />} />
         <Route path="/manage-orders" element={<ManageOrders />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/food/search" element={<SearchPage />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/menu/:id" element={<Product />} />

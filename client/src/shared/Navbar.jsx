@@ -291,18 +291,21 @@ const Navbar = () => {
               <div className="flex gap-8 items-center justify-between flex-col">
                 <Link
                   to={"/"}
+                  onClick={handleNav}
                   className="text-lg font-medium text-black hover:text-red-500"
                 >
                   Home
                 </Link>
                 <Link
                   to={"/menu"}
+                  onClick={handleNav}
                   className="text-lg font-medium text-black hover:text-red-500"
                 >
                   Menu
                 </Link>
                 <Link
                   to={"/orders"}
+                  onClick={handleNav}
                   className="text-lg font-medium text-black hover:text-red-500"
                 >
                   My Orders
@@ -310,6 +313,7 @@ const Navbar = () => {
                 {user && user.role === "admin" && (
                   <Link
                     to={"/add"}
+                    onClick={handleNav}
                     className="text-lg font-medium text-black hover:text-red-500"
                   >
                     Add Item
@@ -327,13 +331,6 @@ const Navbar = () => {
                     Login
                   </Link>
                 )}
-
-                {/* <Link
-              to={"/"}
-              className="text-xl font-medium text-black hover:text-red-700"
-            >
-              Specials
-            </Link> */}
               </div>
             </div>
           </div>
@@ -350,6 +347,12 @@ const Navbar = () => {
             />
 
             <div className="md:flex gap-8 items-center hidden">
+              <Link
+                to={"/dashboard"}
+                className="text-lg active:scale-90 duration-100 font-medium text-black hover:text-red-500"
+              >
+                Dashboard
+              </Link>
               <Link
                 to={"/manage-orders"}
                 className="text-lg active:scale-90 duration-100 font-medium text-black hover:text-red-500"

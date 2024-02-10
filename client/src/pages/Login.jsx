@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import img from "../assets/register.avif";
+import img from "../assets/register.jpg";
 import { toast } from "react-toastify";
 import { AuthContext } from "../context/authContext";
 
@@ -38,7 +38,7 @@ const Login = () => {
 
         toast.success(message);
         {
-          data.role === "admin" ? navigate("/manage-orders") : navigate("/");
+          data.role === "admin" ? navigate("/dashboard") : navigate("/");
         }
       } else {
         toast.error(message);
@@ -60,7 +60,7 @@ const Login = () => {
       <div
         className="text-white mx-auto h-screen flex py-4 justify-center items-center section"
         style={{
-          background: ` url('${img}') center / auto 100% no-repeat`,
+          background: ` url('${img}') center / auto 100%  no-repeat`,
         }}
       >
         <form
