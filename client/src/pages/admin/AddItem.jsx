@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/logo.png";
-import img from "../assets/loginPic.jpg";
-import avatar from "../assets/avatar.png";
+import { useNavigate } from "react-router-dom";
+import img from "../../assets/loginPic.jpg";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -70,7 +68,7 @@ const AddItem = () => {
       if (response.ok) {
         // console.log('User registered successfully:', message);
         toast.success(message);
-        navigate("/menu");
+        navigate("/manage-items");
       } else {
         toast.error(message);
       }

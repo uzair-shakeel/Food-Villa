@@ -35,12 +35,11 @@ const Login = () => {
             token: token,
           },
         });
-        // localStorage.setItem("token", token);
-        // localStorage.setItem("user", JSON.stringify(data));
 
         toast.success(message);
-
-        navigate("/");
+        {
+          data.role === "admin" ? navigate("/manage-orders") : navigate("/");
+        }
       } else {
         toast.error(message);
       }
