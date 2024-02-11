@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { TiThMenu } from "react-icons/ti";
@@ -8,13 +8,39 @@ import { toast } from "react-toastify";
 import { useCartContext } from "../context/cartContext";
 
 const Navbar = () => {
-  const { user, dispatch } = useContext(AuthContext);
+  const { user, dispatch, token } = useContext(AuthContext);
+  const { totalPrice, itemsLength } = useCartContext();
   const [nav, setNav] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const { cartItem } = useCartContext();
-  const itemPrice = cartItem.reduce((a, c) => a * c.qty + c.price, 0);
-  // const DeliveryFee = 90;
-  // const totalPrice = itemPrice + DeliveryFee;
+  const [cartData, setCartData] = useState(null);
+  const [error, setError] = useState(null);
+  console.log(totalPrice);
+  console.log(itemsLength);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/cart`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          const { message } = await response.json();
+          setError(message);
+          return;
+        }
+
+        const result = await response.json();
+        setCartData(result);
+      } catch (error) {
+        console.error(error);
+        setError("An error occurred while fetching cart data.");
+      }
+    };
+
+    fetchData();
+  }, [cartData]);
 
   const navigate = useNavigate();
 
@@ -89,9 +115,15 @@ const Navbar = () => {
                         d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                       />
                     </svg>
-                    <span className="badge badge-sm indicator-item">
-                      {cartItem?.length}
-                    </span>
+                    {user ? (
+                      // If user is logged in, show the actual number of items in the cart
+                      <span className="badge badge-sm indicator-item">
+                        {itemsLength}
+                      </span>
+                    ) : (
+                      // If user is not logged in, show 0
+                      <span className="badge badge-sm indicator-item">0</span>
+                    )}
                   </div>
                 </div>
                 <div
@@ -99,10 +131,30 @@ const Navbar = () => {
                   className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
                 >
                   <div className="card-body">
-                    <span className="font-bold text-lg">
-                      {cartItem?.length} Items
-                    </span>
-                    <span className="text-red">Subtotal: {itemPrice}</span>
+                    {user ? (
+                      // If user is logged in, show the actual number of items in the cart
+
+                      <span className="badge badge-md font-semibold indicator-item">
+                        {itemsLength} Items
+                      </span>
+                    ) : (
+                      // If user is not logged in, show 0
+                      <span className="badge badge-md font-semibold indicator-item">
+                        0 Item
+                      </span>
+                    )}
+                    {user ? (
+                      // If user is logged in, show the actual number of items in the cart
+                      <span className="badge badge-lg font-semibold indicator-item text-red">
+                        Subtotal: {totalPrice}
+                      </span>
+                    ) : (
+                      // If user is not logged in, show 0
+                      <span className="badge badge-lg font-semibold text-red indicator-item">
+                        Subtotal: 0
+                      </span>
+                    )}
+
                     <div className="card-actions">
                       <Link to={"/cart"} className="button w-full">
                         View cart
@@ -195,7 +247,7 @@ const Navbar = () => {
                           />
                         </svg>
                         <span className="badge badge-sm indicator-item">
-                          {cartItem?.length}
+                          {itemsLength}
                         </span>
                       </div>
                     </div>
@@ -205,9 +257,9 @@ const Navbar = () => {
                     >
                       <div className="card-body">
                         <span className="font-bold text-lg">
-                          {cartItem?.length} Items
+                          {itemsLength} Items
                         </span>
-                        <span className="text-red">Subtotal: {itemPrice}</span>
+                        <span className="text-red">Subtotal: {totalPrice}</span>
                         <div className="card-actions">
                           <Link to={"/cart"} className="button w-full">
                             View cart

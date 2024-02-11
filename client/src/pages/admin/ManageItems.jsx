@@ -23,6 +23,13 @@ const ManageItems = () => {
     { id: 6, name: "Dessert", value: "dessert" },
   ];
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // This will animate the scroll
+    });
+  }, []);
+
   return (
     <div className="pt-[16vh] section">
       <div className="container mx-auto py-8">

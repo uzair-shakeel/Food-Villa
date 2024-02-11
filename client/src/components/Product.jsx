@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import { FaSquareMinus, FaSquarePlus } from "react-icons/fa6";
 import NewArrival from "./NewArrival";
 import { useCartContext } from "../context/cartContext";
+import { AuthContext } from "../context/authContext";
+import { toast } from "react-toastify";
 
 const Product = () => {
   // Get the id from the URL parameters
@@ -17,6 +19,7 @@ const Product = () => {
   // Initialize quantity state with a default value of 1
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCartContext();
+  const { user, token } = useContext(AuthContext);
 
   useEffect(() => {
     // Scroll to the top of the page when the component mounts or updates
@@ -44,6 +47,45 @@ const Product = () => {
     // Ensure quantity does not go below 1
     if (quantity > 1) {
       setQuantity((prevQuantity) => prevQuantity - 1);
+    }
+  };
+
+  const handleAddToCart = async () => {
+    if (!token || token === null || token === "null") {
+      toast.error("Please Login First");
+    } else {
+      try {
+        const response = await fetch("http://localhost:3000/cart/add", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            user: user._id,
+            items: [
+              {
+                product: food._id,
+                quantity: quantity,
+                productPrice: food.price,
+              },
+            ],
+          }),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          toast.error(result.message);
+        } else {
+          toast.success(result.message);
+          console.log("Item added to cart:", result.data);
+          // Perform any additional actions after adding item to cart, if needed
+        }
+      } catch (error) {
+        toast.error("Error adding item to cart");
+        console.log("Error adding item to cart:", error.message);
+      }
     }
   };
 
@@ -85,7 +127,8 @@ const Product = () => {
             </h2>
             <div className="gap-4 flex">
               <button
-                onClick={() => addToCart(food)}
+                // onClick={() => addToCart(food)}
+                onClick={handleAddToCart}
                 className="buttonn bg-orange hover:bg-orangehover w-full"
               >
                 Add to Cart

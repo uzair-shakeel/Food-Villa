@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import img from "../../assets/loginPic.jpg";
 import axios from "axios";
@@ -45,6 +45,13 @@ const AddItem = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // This will animate the scroll
+    });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

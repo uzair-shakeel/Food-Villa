@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useCartContext } from "../context/cartContext";
 import CartFood from "../shared/CartFood";
 import { AuthContext } from "../context/authContext";
@@ -7,12 +7,46 @@ import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const [address, setAddress] = useState("");
+  // const { cartItem, addToCart, removeFromCart } = useCartContext();
   const navigate = useNavigate();
-  const { cartItem, addToCart, removeFromCart } = useCartContext();
-  const itemPrice = cartItem.reduce((a, c) => a * c.qty + c.price, 0);
+  const { updateTotalPrice, updateItemsLength } = useCartContext();
+  const [cartData, setCartData] = useState(null);
+  const [error, setError] = useState(null);
+  // const itemPrice = cartItem.reduce((a, c) => a * c.qty + c.price, 0);
   const DeliveryFee = 90;
-  const totalPrice = itemPrice + DeliveryFee;
+  // const totalPrice = itemPrice + DeliveryFee;
   const { user, token } = useContext(AuthContext);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/cart`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          const { message } = await response.json();
+          setError(message);
+          return;
+        }
+
+        const result = await response.json();
+        setCartData(result);
+
+        //cart
+        updateTotalPrice(result.data.totalPrice);
+        updateItemsLength(result.data.items.length);
+      } catch (error) {
+        console.error(error);
+        setError("An error occurred while fetching cart data.");
+      }
+    };
+
+    fetchData();
+  }, [cartData]);
 
   const handleAddressChange = (e) => {
     setAddress(e.target.value);
@@ -62,13 +96,17 @@ const Cart = () => {
 
   return (
     <div className="pt-14">
-      <div className={cartItem?.length === 0 ? "bg-orange h-96" : "bg-orange"}>
+      <div
+        className={
+          cartData?.data?.items?.length === 0 ? "bg-orange h-96" : "bg-orange"
+        }
+      >
         <div className="container mx-auto px-5 py-6">
           <div className="w-full bg-white px-10 py-5  text-black rounded-md">
             <div className="flex justify-between border-b pb-8">
               <h1 className="font-semibold text-2xl">My Food Cart</h1>
               <h2 className="font-semibold text-2xl">
-                {cartItem?.length || 0} items
+                {cartData?.data?.items?.length || 0} items
               </h2>
             </div>
             <div className="mt-10 flex mb-5 text-black/80">
@@ -82,37 +120,39 @@ const Cart = () => {
               <h3 className="font-semibold  text-sm uppercase w-2/5">
                 Total Amount
               </h3>
+              <h3>Delete</h3>
             </div>
 
-            {cartItem?.map((item) => {
+            {cartData?.data?.items?.map((item) => {
               return <CartFood item={item} key={item._id} />;
             })}
-
-            <div
-              className={
-                cartItem.length === 0
-                  ? "mx-auto hidden items-end justify-center px-6 flex-col"
-                  : "mx-auto justify-end items-end px-6 flex-col"
-              }
-            >
-              <div className="text-right mb-2 font-semibold text-redhover">
-                Price: {itemPrice}
-              </div>
-              <div className="text-right mb-2 font-semibold text-redhover">
-                Delivery: {DeliveryFee}
-              </div>
-              <div className="text-right mb-2 font-bold text-redhover">
-                Total Price: {totalPrice}
-              </div>
-              <button
-                onClick={() =>
-                  document.getElementById("my_modal_3").showModal()
+            {user && (
+              <div
+                className={
+                  cartData?.data?.items?.length === 0
+                    ? "mx-auto hidden items-end justify-center px-6 flex-col"
+                    : "mx-auto justify-end items-end px-6 flex-col"
                 }
-                className="button text-center w-full"
               >
-                Proceed to Check Out
-              </button>
-            </div>
+                <div className="text-right mb-2 font-semibold text-redhover">
+                  Price: {cartData?.data?.totalPrice}
+                </div>
+                <div className="text-right mb-2 font-semibold text-redhover">
+                  Delivery: {DeliveryFee}
+                </div>
+                <div className="text-right mb-2 font-bold text-redhover">
+                  Total Price: {cartData?.data?.totalPrice + DeliveryFee}
+                </div>
+                <button
+                  onClick={() =>
+                    document.getElementById("my_modal_3").showModal()
+                  }
+                  className="button text-center w-full"
+                >
+                  Proceed to Check Out
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -131,7 +171,9 @@ const Cart = () => {
           </p>
           <h4 className="text-center text-sm font-semibold">
             Total Amount:{" "}
-            <span className="text-red text-lg">Rs. {totalPrice}/-</span>
+            <span className="text-red text-lg">
+              Rs. {cartData?.data?.totalPrice + DeliveryFee}/-
+            </span>
           </h4>
 
           {/* Shipping Address */}

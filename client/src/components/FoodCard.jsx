@@ -1,10 +1,56 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useCartContext } from "../context/cartContext";
 import { FaCartPlus, FaStar } from "react-icons/fa";
+import { AuthContext } from "../context/authContext";
+import { toast } from "react-toastify";
 
 const FoodCard = ({ item }) => {
-  const { addToCart } = useCartContext();
+  // const { addToCart } = useCartContext();
+  const { user, token } = useContext(AuthContext);
+  const { updateTotalPrice, updateItemsLength } = useCartContext();
+
+  const handleAddToCart = async () => {
+    if (!token || token === null || token === "null") {
+      toast.error("Please Login First");
+    } else {
+      try {
+        const response = await fetch("http://localhost:3000/cart/add", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            items: [
+              {
+                product: item._id,
+                quantity: 1,
+                productPrice: item.price,
+              },
+            ],
+          }),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          toast.error(result.message);
+        } else {
+          toast.success(result.message);
+          console.log("Item added to cart:", result.data);
+          updateTotalPrice(result.data.totalPrice);
+          updateItemsLength(result.data.items.length);
+
+          // Perform any additional actions after adding item to cart, if needed
+        }
+      } catch (error) {
+        toast.error("Error adding item to cart");
+        console.log("Error adding item to cart:", error.message);
+      }
+    }
+  };
+
   return (
     <div className="food-card hover:scale-105 duration-100 cursor-default shadow-lg bg-gray/10 rounded-xl flex flex-col items-center overflow-hidden">
       <div className="relative mb-3 w-full">
@@ -15,7 +61,8 @@ const FoodCard = ({ item }) => {
         <div className="absolute top-2 left-2">
           <button className="shadow-md text-white bg-red hover:bg-redhover cursor-pointer p-5 rounded-full relative">
             <FaCartPlus
-              onClick={() => addToCart(item)}
+              // onClick={() => addToCart(item)}
+              onClick={handleAddToCart}
               className="absolute text-xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
             />
           </button>
