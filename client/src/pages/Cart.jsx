@@ -7,14 +7,14 @@ import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const [address, setAddress] = useState("");
-  // const { cartItem, addToCart, removeFromCart } = useCartContext();
   const navigate = useNavigate();
-  const { updateTotalPrice, updateItemsLength } = useCartContext();
+  const { updateTotalPrice, updateItemsLength, totalPrice } = useCartContext();
   const [cartData, setCartData] = useState(null);
   const [error, setError] = useState(null);
-  // const itemPrice = cartItem.reduce((a, c) => a * c.qty + c.price, 0);
   const DeliveryFee = 90;
-  // const totalPrice = itemPrice + DeliveryFee;
+  const totalAmount = totalPrice + DeliveryFee;
+  // console.log(cartData?.data?.items?.quantity);
+
   const { user, token } = useContext(AuthContext);
 
   useEffect(() => {
@@ -35,7 +35,6 @@ const Cart = () => {
 
         const result = await response.json();
         setCartData(result);
-
         //cart
         updateTotalPrice(result.data.totalPrice);
         updateItemsLength(result.data.items.length);
@@ -60,37 +59,38 @@ const Cart = () => {
         navigate("/login");
         toast.error("Please Sign In first");
       } else {
-        const products = cartItem.map((item) => ({
+        const products = cartData?.data?.items?.map((item) => ({
           product: item._id,
-          qty: item.qty,
+          name: item.product.name,
+          qty: item.quantity,
         }));
-
-        const response = await fetch(`http://localhost:3000/order`, {
+        const data = {
+          products,
+          totalAmount,
+          shippingAddress: address,
+        };
+        const response = await fetch(`http://localhost:3000/order/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+            Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({
-            user: user._id,
-            products: products,
-            totalAmount: totalPrice,
-            shippingAddress: address,
-          }),
+          body: JSON.stringify(data),
         });
-
+        console.log(data);
         const result = await response.json();
 
         if (response.ok) {
-          toast.success(result.message);
           navigate("/orders");
-          location.reload();
+
+          toast.success(result.message);
         } else {
           toast.error(result.message);
+          console.log(result.error);
         }
       }
     } catch (err) {
-      toast.error("Server not responding");
+      toast.error("Server not responding From Frontend");
     }
   };
 
@@ -126,7 +126,7 @@ const Cart = () => {
             {cartData?.data?.items?.map((item) => {
               return <CartFood item={item} key={item._id} />;
             })}
-            {user && (
+            {user && cartData && (
               <div
                 className={
                   cartData?.data?.items?.length === 0
@@ -179,6 +179,7 @@ const Cart = () => {
           {/* Shipping Address */}
           <div className="mb-4">
             <label
+              required
               htmlFor="shippingAddress"
               className="block text-sm font-medium my-3 text-gray-700"
             >
@@ -199,11 +200,15 @@ const Cart = () => {
           {/* Payment Method Selection */}
           <div className="mb-4">
             <label
+              required
               htmlFor="paymentMethod"
               className="block text-sm font-medium text-gray-700"
             >
               Payment Method
             </label>
+            <p className="text-xs text-red">
+              Currently we are only accepting the COD.
+            </p>
             <select
               id="paymentMethod"
               name="paymentMethod"
@@ -211,7 +216,15 @@ const Cart = () => {
               required
             >
               <option value="">Select Payment Method</option>
-              <option value="credit_card">Credit Card</option>
+              <option disabled value="credit_card">
+                Credit Card
+              </option>
+              <option disabled value="credit_card">
+                Easypaisa
+              </option>
+              <option disabled value="credit_card">
+                Jazz Cash
+              </option>
               <option value="cash_on_delivery">Cash on Delivery</option>
             </select>
           </div>

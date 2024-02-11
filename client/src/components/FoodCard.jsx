@@ -6,7 +6,6 @@ import { AuthContext } from "../context/authContext";
 import { toast } from "react-toastify";
 
 const FoodCard = ({ item }) => {
-  // const { addToCart } = useCartContext();
   const { user, token } = useContext(AuthContext);
   const { updateTotalPrice, updateItemsLength } = useCartContext();
 

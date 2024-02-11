@@ -155,4 +155,30 @@ const updateCart = async (req, res) => {
   }
 };
 
-module.exports = { getUserCart, addItemToCart, removeItemFromCart, updateCart };
+// Controller to empty cart data of a specific user
+
+const emptyCartByUserID = async (userId) => {
+  try {
+    // Logic to empty the cart of the user with the provided userId
+    // Assuming you have a Cart model/schema
+    const cart = await Cart.findOne({ user: userId });
+    if (cart) {
+      cart.items = []; // Empty the items array
+      cart.totalQuantity = 0; // Reset totalQuantity
+      cart.totalPrice = 0; // Reset totalPrice
+      await cart.save();
+    }
+    // You can add additional logic if needed
+  } catch (error) {
+    // Handle errors
+    console.error("Error emptying cart:", error);
+  }
+};
+
+module.exports = {
+  getUserCart,
+  addItemToCart,
+  removeItemFromCart,
+  updateCart,
+  emptyCartByUserID,
+};

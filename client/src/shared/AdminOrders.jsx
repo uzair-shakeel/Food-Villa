@@ -42,25 +42,25 @@ const Orders = ({ item }) => {
         <div className="flex items-center">
           <div className="w-[50px]">
             <img
-              src={item.user.profileImage}
+              src={item?.user?.profileImage}
               className="h-[50px] w-full object-cover rounded-full"
               alt=""
             />
           </div>
           <div className="ml-4 font-bold text-sm">
-            {item.user.name} / {item.user.email}
+            {item?.user?.name} / {item?.user?.email}
           </div>
         </div>
       </td>
-      <td className="font-semibold text-sm uppercase">{item.totalAmount}</td>
+      <td className="font-semibold text-sm uppercase">{item?.totalAmount}</td>
       <td className="font-semibold text-sm uppercase">
         {formattedDate} - {time}
       </td>
-      <td className="font-semibold text-sm uppercase">{item.status}</td>
+      <td className="font-semibold text-sm uppercase">{item?.status}</td>
       <td className="font-semibold text-sm uppercase">
         {item?.products?.map((product) => (
           <div key={product._id}>
-            {product.product.name} - {product.qty}
+            {product?.product?.name || product?.name} - {product?.qty}
           </div>
         ))}
       </td>

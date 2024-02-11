@@ -14,6 +14,10 @@ const orderSchema = new mongoose.Schema(
           ref: "Food",
           required: true,
         },
+        name: {
+          type: String,
+          required: true,
+        },
         qty: {
           type: Number,
           required: true,

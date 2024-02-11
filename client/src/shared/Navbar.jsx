@@ -13,8 +13,6 @@ const Navbar = () => {
   const [nav, setNav] = useState(false);
   const [cartData, setCartData] = useState(null);
   const [error, setError] = useState(null);
-  console.log(totalPrice);
-  console.log(itemsLength);
   useEffect(() => {
     const fetchData = async () => {
       try {
