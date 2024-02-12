@@ -2,6 +2,7 @@ const Food = require("../models/FoodSchema");
 
 exports.getAllFoods = async (req, res) => {
   try {
+    const user = req.body.userId;
     const { category } = req.query;
 
     let query = {};

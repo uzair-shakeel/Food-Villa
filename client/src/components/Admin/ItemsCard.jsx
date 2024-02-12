@@ -7,12 +7,16 @@ import { toast } from "react-toastify";
 
 const ItemsCard = ({ item }) => {
   const { addToCart } = useCartContext();
-  const { user } = useContext(AuthContext);
+  const { user, token } = useContext(AuthContext);
 
   const deleteItem = async () => {
     try {
       const response = await fetch(`http://localhost:3000/food/${item._id}`, {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       });
       const result = await response.json();
 

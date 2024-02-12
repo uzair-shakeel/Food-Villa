@@ -1,16 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
 import useFetch from "../../hooks/useFetch";
-import Orders from "../../shared/Orders";
+import Users from "../../shared/Users";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../context/authContext";
-import Users from "../../shared/Users";
 
 const ManageUsers = () => {
   const [tab, setTab] = useState("");
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
-  // const { token } = useContext(AuthContext);
-  console.log(users);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -39,7 +36,7 @@ const ManageUsers = () => {
     };
 
     fetchUsers();
-  }, [tab]); // Empty dependency array ensures this effect runs only once after initial render
+  }, [tab]);
 
   return (
     <div className="pt-14">
@@ -78,26 +75,28 @@ const ManageUsers = () => {
                   </button>
                 </div>
               </div>
-
               <h2 className="font-semibold text-2xl">
                 {users?.data?.length || 0} {tab === "admin" ? "Admin" : "Users"}
               </h2>
             </div>
-            <div className="mt-10 flex mb-5 text-black/80">
-              <h3 className="font-semibold text- text-sm uppercase w-3/5">
-                User ID
-              </h3>
-              <h3 className="font-semibold text-sm uppercase w-2/5">Name</h3>
-              <h3 className="font-semibold text-sm uppercase w-2/5">Email</h3>
-              <h3 className="font-semibold  text-sm uppercase w-2/5">Role</h3>
-              <h3 className="font-semibold text-sm uppercase w-2/5">
-                Date of Registration
-              </h3>
+            <div className="mt-10">
+              <table className="min-w-full text-center">
+                <thead>
+                  <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                    <th className="py-3 px-6 text-left">User ID</th>
+                    <th className="py-3 px-6 ">Name</th>
+                    <th className="py-3 px-6 ">Email</th>
+                    <th className="py-3 px-6 ">Role</th>
+                    <th className="py-3 px-6 ">Date of Registration</th>
+                  </tr>
+                </thead>
+                <tbody className="text-gray-600 text-sm ">
+                  {users?.data?.map((user) => (
+                    <Users user={user} key={user._id} />
+                  ))}
+                </tbody>
+              </table>
             </div>
-
-            {users?.data?.map((user) => {
-              return <Users user={user} key={user._id} />;
-            })}
           </div>
         </div>
       </div>

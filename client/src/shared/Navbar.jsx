@@ -50,6 +50,7 @@ const Navbar = () => {
     dispatch({
       type: "LOGOUT",
     });
+    handleNav();
     toast.success("Logged Out");
     navigate("/");
   };
@@ -360,15 +361,6 @@ const Navbar = () => {
                 >
                   My Orders
                 </Link>
-                {user && user.role === "admin" && (
-                  <Link
-                    to={"/add"}
-                    onClick={handleNav}
-                    className="text-lg font-medium text-black hover:text-red-500"
-                  >
-                    Add Item
-                  </Link>
-                )}
                 {user ? (
                   <button
                     className="buttonn bg-black my-2 hover:bg-black/70"
@@ -555,21 +547,24 @@ const Navbar = () => {
                 nav ? "right-0" : "right-[-100%]"
               } pt-40 `}
             >
-              <div className="md:flex gap-8 items-center hidden">
+              <div className="flex gap-8 items-center justify-between flex-col">
                 <Link
-                  to={"/"}
+                  to={"/manage-orders"}
+                  onClick={handleNav}
                   className="text-lg active:scale-75 duration-100 font-medium text-black hover:text-red-500"
                 >
                   Manage Orders
                 </Link>
                 <Link
-                  to={"/menu"}
+                  to={"/manage-users"}
+                  onClick={handleNav}
                   className="text-lg font-medium active:scale-75 duration-100 text-black hover:text-red-500"
                 >
                   Manage Users
                 </Link>
                 <Link
-                  to={"/orders"}
+                  to={"/manage-items"}
+                  onClick={handleNav}
                   className="text-lg font-medium text-black active:scale-75 duration-100 hover:text-red-500"
                 >
                   Manage Items
@@ -577,61 +572,24 @@ const Navbar = () => {
                 {user && user.role === "admin" && (
                   <Link
                     to={"/add"}
+                    onClick={handleNav}
                     className="text-lg font-medium text-black hover:text-red-500"
                   >
                     Add Item
                   </Link>
                 )}
-
-                <div className="dropdown dropdown-end">
-                  <div
-                    tabIndex={0}
-                    role="button"
-                    className="btn btn-ghost btn-circle avatar"
+                {user ? (
+                  <button
+                    className="buttonn bg-black my-2 hover:bg-black/70"
+                    onClick={handleLogout}
                   >
-                    <div className="w-10 rounded-full">
-                      <img
-                        alt="Tailwind CSS Navbar component"
-                        src={user.profileImage}
-                      />
-                    </div>
-                  </div>
-                  <ul
-                    tabIndex={0}
-                    className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-                  >
-                    <li>
-                      <Link
-                        to={"/profile"}
-                        className="justify-between py-2 px-3"
-                      >
-                        Profile
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to={"/orders"}
-                        className="justify-between py-2 px-3"
-                      >
-                        Manage Orders
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to={"/cart"} className="justify-between py-2 px-3">
-                        Manage Items
-                      </Link>
-                    </li>
-
-                    <li>
-                      <button
-                        className="buttonn bg-black my-2 hover:bg-black/70"
-                        onClick={handleLogout}
-                      >
-                        Logout
-                      </button>
-                    </li>
-                  </ul>
-                </div>
+                    Logout
+                  </button>
+                ) : (
+                  <Link className="button" to={"/login"} onClick={handleNav}>
+                    Login
+                  </Link>
+                )}
               </div>
             </div>
           </div>

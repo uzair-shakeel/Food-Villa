@@ -32,6 +32,10 @@ const Menu = () => {
     { id: 6, name: "Dessert", value: "dessert", img: desert },
   ];
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="pt-[16vh] section">
       <div className="container mx-auto py-8">

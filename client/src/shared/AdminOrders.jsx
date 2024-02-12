@@ -38,7 +38,7 @@ const Orders = ({ item }) => {
 
   return (
     <tr>
-      <td>
+      <td className="py-3 px-6 border-b text-center font-semibold text- text-sm uppercase ">
         <div className="flex items-center">
           <div className="w-[50px]">
             <img
@@ -52,19 +52,44 @@ const Orders = ({ item }) => {
           </div>
         </div>
       </td>
-      <td className="font-semibold text-sm uppercase">{item?.totalAmount}</td>
-      <td className="font-semibold text-sm uppercase">
+      <td className="py-3 px-6 border-b text-center font-semibold text- text-sm uppercase ">
+        {item?.totalAmount}
+      </td>
+      <td className="py-3 px-6 border-b text-center font-semibold text- text-sm uppercase ">
         {formattedDate} - {time}
       </td>
-      <td className="font-semibold text-sm uppercase">{item?.status}</td>
-      <td className="font-semibold text-sm uppercase">
+      <td className="py-3 px-6 border-b text-center font-semibold text- text-sm uppercase ">
+        {item?.status === "pending" && (
+          <h4 className="font-semibold bg-blue-200 py-2 px-4 rounded-md text-blue-700 text-sm uppercase">
+            {item?.status}
+          </h4>
+        )}
+        {item?.status === "processing" && (
+          <h4 className="font-semibold bg-[#5F6F52]/20 py-2 px-4 rounded-md text-[#5F6F52] text-sm uppercase">
+            {item?.status}
+          </h4>
+        )}
+        {item?.status === "completed" && (
+          <h4 className="font-semibold bg-green-200 py-2 px-4 rounded-md text-green-700 text-sm uppercase">
+            {item?.status}
+          </h4>
+        )}
+        {item?.status === "cancelled" && (
+          <h4 className="font-semibold bg-red/20 py-2 px-4 rounded-md text-redhover text-sm uppercase">
+            {item?.status}
+          </h4>
+        )}
+      </td>
+
+      {/* <td className="py-3 px-6 border-b text-center">{item?.status}</td> */}
+      <td className="py-3 px-6 border-b text-center font-semibold text- text-sm uppercase ">
         {item?.products?.map((product) => (
           <div key={product._id}>
             {product?.product?.name || product?.name} - {product?.qty}
           </div>
         ))}
       </td>
-      <td>
+      <td className="py-3 px-6 border-b text-center">
         {item.status === "pending" ? (
           <div className="flex gap-2">
             <button

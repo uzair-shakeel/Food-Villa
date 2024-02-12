@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import SearchPage from "../pages/SearchPage";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -22,11 +20,10 @@ const SearchBar = () => {
         navigate(`/food/search?keyword=${searchTerm}`, {
           state: result.data,
         });
-      }
-      if (!response.ok) {
+        location.reload();
+      } else {
         toast.error(result.message);
       }
-
       setLoading(false);
     } catch (error) {
       setError("An error occurred while fetching data");
@@ -34,8 +31,14 @@ const SearchBar = () => {
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   return (
-    <div className="flex rounded-full py-2 px-4 justify-between items-center bg-white  shadow-md">
+    <div className="flex rounded-lg py-2 px-4 justify-between items-center bg-white shadow-md">
       <div className="flex items-center w-full">
         <FaSearch size={15} className="text-gray" />
         <input
@@ -44,10 +47,11 @@ const SearchBar = () => {
           className="text-black w-full border-none outline-none py-2 px-4"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyDown={handleKeyPress}
         />
       </div>
       <button
-        className="h-10 w-10 cursor-pointer relative bg-orange rounded-full"
+        className="h-10 w-10 cursor-pointer relative bg-orange rounded-lg"
         onClick={handleSearch}
         disabled={loading}
       >

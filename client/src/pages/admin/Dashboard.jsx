@@ -1,25 +1,142 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
+import { AuthContext } from "../../context/authContext";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
+  const { token } = useContext(AuthContext);
+  const [totalOrders, setTotalOrders] = useState();
+  const [totalPendingOrders, setTotalPendingOrders] = useState();
+  const [totalReceivedOrders, setTotalReceivedOrders] = useState();
+  const [totalCompletedOrders, setTotalCompletedOrders] = useState();
+  const [totalCancelledOrders, setTotalCancelledOrders] = useState();
+  console.log(totalOrders);
   const { apiData: totalItems } = useFetch(`http://localhost:3000/food`);
   const { apiData: totalUsers } = useFetch(
     `http://localhost:3000/user/getAllUsers`
   );
-  const { apiData: totalOrders } = useFetch(`http://localhost:3000/order`);
-  const { apiData: totalPendingOrders } = useFetch(
-    `http://localhost:3000/order?status=pending`
-  );
-  const { apiData: totalReceivedOrders } = useFetch(
-    `http://localhost:3000/order?status=processing`
-  );
-  const { apiData: totalCompletedOrders } = useFetch(
-    `http://localhost:3000/order?status=completed`
-  );
-  const { apiData: totalCancelledOrders } = useFetch(
-    `http://localhost:3000/order?status=cancelled`
-  );
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/order`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (!response.ok) {
+          console.log("Failed to fetch users");
+          toast.error(response.message);
+        }
+        const data = await response.json();
+        setTotalOrders(data);
+      } catch (error) {
+        toast.error(error.message);
+        setError(error.message);
+      }
+    };
+
+    const fetchPendingOrders = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/order?status=pending`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          console.log("Failed to fetch users");
+          toast.error(response.message);
+        }
+        const data = await response.json();
+        setTotalPendingOrders(data);
+      } catch (error) {
+        toast.error(error.message);
+      }
+    };
+
+    const fetchReceivedOrders = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/order?status=processing`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          console.log("Failed to fetch users");
+          toast.error(response.message);
+        }
+        const data = await response.json();
+        setTotalReceivedOrders(data);
+      } catch (error) {
+        toast.error(error.message);
+      }
+    };
+
+    const fetchCompletedOrders = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/order?status=completed`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          console.log("Failed to fetch users");
+          toast.error(response.message);
+        }
+        const data = await response.json();
+        setTotalCompletedOrders(data);
+      } catch (error) {
+        toast.error(error.message);
+      }
+    };
+
+    const fetchCancelledOrders = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/order?status=cancelled`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          console.log("Failed to fetch users");
+          toast.error(response.message);
+        }
+        const data = await response.json();
+        setTotalCancelledOrders(data);
+      } catch (error) {
+        toast.error(error.message);
+      }
+    };
+
+    fetchOrders();
+    fetchPendingOrders();
+    fetchReceivedOrders();
+    fetchCompletedOrders();
+    fetchCancelledOrders();
+  }, []);
 
   return (
     <div className="pt-14 min-h-screen flex flex-col gap-10 items-center justify-center section">
@@ -34,7 +151,7 @@ const Dashboard = () => {
           to={"/manage-orders"}
           className="bg-orange/10 shadow-lg  active:scale-95 hover:bg-orange/70 duration-150 hover:shadow-xl hover:scale-105 shadow-orangehover rounded-lg py-8 px-10 font-bold"
         >
-          Total Orders - {totalOrders?.length}
+          Total Orders - {totalOrders?.data?.length}
         </Link>
         <Link
           to={"/manage-items"}
@@ -48,25 +165,25 @@ const Dashboard = () => {
           to={"/manage-orders"}
           className="bg-blue-100 shadow-lg active:scale-95 hover:bg-blue-300 duration-150 hover:shadow-xl hover:scale-105 shadow-blue-800 rounded-lg py-8 px-10 font-bold"
         >
-          Pending Orders - {totalPendingOrders?.length}
+          Pending Orders - {totalPendingOrders?.data?.length}
         </Link>
         <Link
           to={"/manage-orders"}
           className="bg-blue-100 shadow-lg active:scale-95 hover:bg-blue-300 duration-150 hover:shadow-xl hover:scale-105 shadow-blue-800 rounded-lg py-8 px-10 font-bold"
         >
-          Received Orders - {totalReceivedOrders?.length}
+          Received Orders - {totalReceivedOrders?.data?.length}
         </Link>
         <Link
           to={"/manage-orders"}
           className="bg-blue-100 shadow-lg active:scale-95 hover:bg-blue-300 duration-150 hover:shadow-xl hover:scale-105 shadow-blue-800 rounded-lg py-8 px-10 font-bold"
         >
-          Completed Orders - {totalCompletedOrders?.length}
+          Completed Orders - {totalCompletedOrders?.data?.length}
         </Link>
         <Link
           to={"/manage-orders"}
           className="bg-blue-100 shadow-lg active:scale-95 hover:bg-blue-300 duration-150 hover:shadow-xl hover:scale-105 shadow-blue-800 rounded-lg py-8 px-10 font-bold"
         >
-          Cancelled Orders - {totalCancelledOrders?.length}
+          Cancelled Orders - {totalCancelledOrders?.data?.length}
         </Link>
       </div>
     </div>

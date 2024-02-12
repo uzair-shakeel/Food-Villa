@@ -1,8 +1,9 @@
 const jwt = require("jsonwebtoken");
 
-const protect = async (req, res, next) => {
+const protect = (req, res, next) => {
   try {
-    const token = req.headers.authorization?.split(" ")[1]; // Optional chaining operator for safer access
+    const token = req?.headers?.authorization?.split(" ")[1]; // Optional chaining operator for safer access
+
     if (!token) {
       return res.status(401).json({
         success: false,
@@ -18,6 +19,8 @@ const protect = async (req, res, next) => {
         });
       } else {
         req.body.userId = decode.userId;
+        req.body.role = decode.role;
+
         next();
       }
     });
@@ -30,4 +33,25 @@ const protect = async (req, res, next) => {
   }
 };
 
-module.exports = protect;
+const verifyUser = (req, res, next) => {
+  const userId = req.id;
+  const paramsId = req.params.id;
+  const role = req.role;
+
+  if (paramsId === userId || role === "admin") {
+    next();
+  } else {
+    res.status(401).json({ success: false, message: "You're not Authorized" });
+  }
+};
+
+const verifyAdmin = (req, res, next) => {
+  const role = req.body.role;
+  if (role === "admin") {
+    next();
+  } else {
+    res.status(401).json({ success: false, message: "You're not Authorized" });
+  }
+};
+
+module.exports = { protect, verifyAdmin };

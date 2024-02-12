@@ -3,14 +3,14 @@ import { toast } from "react-toastify";
 import { AuthContext } from "../../context/authContext";
 import AdminOrders from "../..//shared/AdminOrders";
 
-const ManageUsers = () => {
+const ManageOrders = () => {
   const [orders, setOrders] = useState([]);
   const [status, setStatus] = useState("");
   const [error, setError] = useState(null);
   const { token } = useContext(AuthContext);
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchOrders = async () => {
       try {
         const response = await fetch(
           `http://localhost:3000/order?status=${status}`,
@@ -34,7 +34,7 @@ const ManageUsers = () => {
       }
     };
 
-    fetchUsers();
+    fetchOrders();
   }, [status]);
 
   return (
@@ -96,23 +96,25 @@ const ManageUsers = () => {
               </h2>
             </div>
             <div className="mt-10">
-              <table className="w-full">
+              <table className="mt-10 w-full mb-5 text-black/80">
                 <thead>
                   <tr>
                     <th className="font-semibold text-sm uppercase">
                       User Name / Email
                     </th>
-                    <th className="font-semibold text-sm uppercase">
+                    <th className="font-semibold text-center text-sm uppercase">
                       Total Amount
                     </th>
-                    <th className="font-semibold text-sm uppercase">
+                    <th className="font-semibold text-center text-sm uppercase">
                       Date - Time of Order
                     </th>
-                    <th className="font-semibold text-sm uppercase">Status</th>
-                    <th className="font-semibold text-sm uppercase">
+                    <th className="font-semibold text-center text-sm uppercase">
+                      Status
+                    </th>
+                    <th className="font-semibold text-center text-sm uppercase">
                       Item Name - Qty
                     </th>
-                    <th className="font-semibold text-sm uppercase">
+                    <th className="font-semibold text-center text-sm uppercase">
                       Handle Order
                     </th>
                   </tr>
@@ -131,4 +133,4 @@ const ManageUsers = () => {
   );
 };
 
-export default ManageUsers;
+export default ManageOrders;

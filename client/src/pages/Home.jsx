@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import FaqList from "../components/FAQ/FaqList";
 import HomePic from "../assets/Home.png";
 import ChefPic from "../assets/chef.png";
@@ -6,9 +6,11 @@ import FaqPic from "../assets/faq.png";
 import RecommendedFood from "../components/RecommendedFood";
 import NewArrival from "../components/NewArrival";
 import SearchBar from "../shared/SearchBar";
-import Crousal from "../components/Crousal";
 
 const Home = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       {/* // Home Section Starts */}

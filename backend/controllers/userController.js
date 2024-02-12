@@ -2,8 +2,14 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const generateToken = (userId) => {
-  return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: "15d" });
+const generateToken = (user) => {
+  return jwt.sign(
+    { userId: user._id, role: user.role },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "15d",
+    }
+  );
 };
 
 // Register a new user without OTP and email verification
@@ -68,7 +74,7 @@ exports.loginUser = async (req, res) => {
     }
 
     // Generate JWT token
-    const token = generateToken(user._id);
+    const token = generateToken(user);
 
     res.status(200).json({ data: user, token, message: "Login successful" });
   } catch (error) {

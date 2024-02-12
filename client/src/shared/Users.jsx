@@ -1,46 +1,32 @@
 import React from "react";
-import { FaStopwatch, FaCheckCircle } from "react-icons/fa";
-import { PiCookingPotFill } from "react-icons/pi";
-import { MdCancel } from "react-icons/md";
 
 const Users = ({ user }) => {
-  // Assuming {item.createdAt} is a string representing a date
-  const createdAtDate = new Date(user.createdAt); // Convert the string to a Date object
-  const formattedDate = createdAtDate.toDateString(); // Format the Date object to a string in the form "Day Month Date Year"
+  const createdAtDate = new Date(user.createdAt);
+  const formattedDate = createdAtDate.toDateString();
   const options = { hour: "numeric", minute: "numeric", hour12: true };
-  const time = createdAtDate.toLocaleTimeString("en-US", options); // Get the time portion as a string
+  const time = createdAtDate.toLocaleTimeString("en-US", options);
 
   return (
-    <div className="py-3 flex items-center px-6 -mx-8 ">
-      <div className="flex w-3/5">
-        {/* <div className="w-20">
-          <img
-            src={item.image}
-            alt=""
-            className="h-[50px] w-full object-cover rounded-md"
-          />
-        </div> */}
-        <div className="flex flex-col justify-between ml-4 flex-grow">
-          <div className="font-bold text-sm">{user._id}</div>
-        </div>
-      </div>
-      <h4 className="font-semibold text- text-sm uppercase w-2/5">
-        {user.name}
-      </h4>
-      <h4 className="font-semibold text- text-sm uppercase w-2/5">
-        {user.email}
-      </h4>
-      <h4 className="font-semibold text- text-sm uppercase w-2/5">
-        {user.role}
-      </h4>
-
-      <h4
-        className="
-      font-semibold text- text-sm uppercase w-2/5"
-      >
+    <tr className="border-b">
+      <td className="py-3 px-6 text-left">{user._id}</td>
+      <td className="py-3 px-6 ">{user.name}</td>
+      <td className="py-3 px-6 ">{user.email}</td>
+      <td className="py-3 px-6 ">
+        {user.role === "user" && (
+          <h4 className="font-semibold bg-blue-200 py-2 px-4 rounded-md text-blue-700 text-sm uppercase">
+            {user.role}
+          </h4>
+        )}
+        {user.role === "admin" && (
+          <h4 className="font-semibold bg-red/20 py-2 px-4 rounded-md text-red text-sm uppercase">
+            {user.role}
+          </h4>
+        )}
+      </td>
+      <td className="py-3 px-6 ">
         {formattedDate} - {time}
-      </h4>
-    </div>
+      </td>
+    </tr>
   );
 };
 

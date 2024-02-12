@@ -50,8 +50,8 @@ exports.getAllOrders = async (req, res) => {
 };
 exports.getOrdersById = async (req, res) => {
   try {
-    const id = req.params.id;
-    const orders = await Order.find({ user: id }).sort({ createdAt: -1 });
+    const user = req.params.id;
+    const orders = await Order.find({ user }).sort({ createdAt: -1 });
     res.status(200).json({
       status: "success",
       message: "All orders fetched successfully",

@@ -13,6 +13,7 @@ const {
   getEliteFood,
   getFoodBySearch,
 } = require("../controllers/foodController");
+const { protect, verifyAdmin } = require("../middleware/authMiddleware");
 
 // Get all food items
 router.get("/", getAllFoods);
@@ -30,12 +31,12 @@ router.get("/elite", getEliteFood);
 router.get("/new", getNewFood);
 
 // Create a new food item
-router.post("/create", createFood);
+router.post("/create", protect, verifyAdmin, createFood);
 
 // Update a specific food item by ID
-router.put("/:foodId", updateFoodById);
+router.put("/:foodId", protect, verifyAdmin, updateFoodById);
 
 // Delete a specific food item by ID
-router.delete("/:foodId", deleteFoodById);
+router.delete("/:foodId", protect, verifyAdmin, deleteFoodById);
 
 module.exports = router;

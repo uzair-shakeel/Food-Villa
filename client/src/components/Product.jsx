@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import { FaSquareMinus, FaSquarePlus } from "react-icons/fa6";
 import NewArrival from "./NewArrival";
@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 const Product = () => {
   // Get the id from the URL parameters
   const { id } = useParams();
+  const navigate = useNavigate();
 
   // Fetch data based on the id
   const { apiData: food, error } = useFetch(
@@ -18,37 +19,9 @@ const Product = () => {
 
   // Initialize quantity state with a default value of 1
   const [quantity, setQuantity] = useState(1);
-  const { addToCart } = useCartContext();
+  // const { addToCart } = useCartContext();
+  const { updateTotalPrice, updateItemsLength } = useCartContext();
   const { user, token } = useContext(AuthContext);
-
-  useEffect(() => {
-    // Scroll to the top of the page when the component mounts or updates
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth", // Smooth scrolling behavior
-    });
-  }, []);
-
-  if (!food) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  // Function to handle increasing quantity
-  const increaseQuantity = () => {
-    setQuantity((prevQuantity) => prevQuantity + 1);
-  };
-
-  // Function to handle decreasing quantity
-  const decreaseQuantity = () => {
-    // Ensure quantity does not go below 1
-    if (quantity > 1) {
-      setQuantity((prevQuantity) => prevQuantity - 1);
-    }
-  };
 
   const handleAddToCart = async () => {
     if (!token || token === null || token === "null") {
@@ -62,7 +35,6 @@ const Product = () => {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            user: user._id,
             items: [
               {
                 product: food._id,
@@ -80,6 +52,9 @@ const Product = () => {
         } else {
           toast.success(result.message);
           console.log("Item added to cart:", result.data);
+          updateTotalPrice(result.data.totalPrice);
+          updateItemsLength(result.data.items.length);
+
           // Perform any additional actions after adding item to cart, if needed
         }
       } catch (error) {
@@ -87,6 +62,70 @@ const Product = () => {
         console.log("Error adding item to cart:", error.message);
       }
     }
+  };
+
+  const handleOrderNow = async () => {
+    if (!token || token === null || token === "null") {
+      toast.error("Please Login First");
+    } else {
+      try {
+        const response = await fetch("http://localhost:3000/cart/add", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            items: [
+              {
+                product: food._id,
+                quantity: quantity,
+                productPrice: food.price,
+              },
+            ],
+          }),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          toast.error(result.message);
+        } else {
+          console.log("Item added to cart:", result.data);
+          updateTotalPrice(result.data.totalPrice);
+          updateItemsLength(result.data.items.length);
+          navigate("/cart");
+          // Perform any additional actions after adding item to cart, if needed
+        }
+      } catch (error) {
+        toast.error("Error adding item to cart");
+        console.log("Error adding item to cart:", error.message);
+      }
+    }
+  };
+
+  useEffect(() => {
+    // Scroll to the top of the page when the component mounts or updates
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // Smooth scrolling behavior
+    });
+  }, []);
+
+  if (!food) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  const increaseQuantity = async () => {
+    setQuantity(quantity + 1);
+  };
+
+  const decreaseQuantity = async () => {
+    setQuantity(quantity - 1);
   };
 
   return (
@@ -134,9 +173,8 @@ const Product = () => {
                 Add to Cart
               </button>
               <Link
-                to={"/cart"}
                 className="button w-full text-center"
-                onClick={() => addToCart(food)}
+                onClick={handleOrderNow}
               >
                 Order Now
               </Link>
