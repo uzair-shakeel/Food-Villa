@@ -48,7 +48,19 @@ const ManageOrders = () => {
               <h1 className="font-semibold text-lg md:text-xl lg:text-2xl">
                 Total Orders
               </h1>
-              <div className="md:col-span-2  md:px-[30px]">
+              <div className="block md:hidden">
+                <select
+                  onChange={(e) => setStatus(e.target.value)}
+                  className="select select-bordered select-xs w-full max-w-xs"
+                >
+                  <option value="">All</option>
+                  <option value="pending">Pending</option>
+                  <option value="processing">Processing</option>
+                  <option value="completed">Completed</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+              </div>
+              <div className="hidden md:inline-block col-span-2  md:px-[30px]">
                 <div>
                   <button
                     onClick={() => setStatus("")}

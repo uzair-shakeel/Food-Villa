@@ -49,7 +49,17 @@ const ManageUsers = () => {
               <h1 className="font-semibold text-lg md:text-xl lg:text-2xl">
                 Total Users
               </h1>
-              <div className="md:col-span-2 md:px-[30px] ">
+              <div className="block md:hidden">
+                <select
+                  onChange={(e) => setTab(e.target.value)}
+                  className="select select-bordered select-xs w-full max-w-xs"
+                >
+                  <option value="">All</option>
+                  <option value="admin">Admin</option>
+                  <option value="user">User</option>
+                </select>
+              </div>
+              <div className="hidden md:inline-block col-span-2 md:px-[30px] ">
                 <div>
                   <button
                     onClick={() => setTab("")}
@@ -96,7 +106,7 @@ const ManageUsers = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="text-gray-600 text-sm ">
+                <tbody className="text-gray-600 text-xs md:text-sm ">
                   {users?.data?.map((user) => (
                     <Users user={user} key={user._id} />
                   ))}
