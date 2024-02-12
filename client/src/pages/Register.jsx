@@ -79,7 +79,7 @@ const Register = () => {
   return (
     <>
       <div
-        className="text-white mx-auto h-screen flex py-4 justify-center items-center section"
+        className="text-white mx-auto min-h-screen flex py-4 justify-center items-center section"
         style={{
           background: ` url('${img}') center / auto 100%  no-repeat`,
         }}
@@ -87,7 +87,7 @@ const Register = () => {
         <form
           onSubmit={handleSubmit}
           action=""
-          className="bg-slate-800 border my-auto top-8 border-slate-400 rounded-md p-8 shadow-lg backdrop-blur-sm backdrop-filter bg-opacity-30 relative"
+          className="bg-slate-800 border my-auto lg:my-14 top-8 border-slate-400 rounded-md p-8 shadow-lg backdrop-blur-sm backdrop-filter bg-opacity-30 relative"
         >
           <label htmlFor="file-upload" className="custom-file-upload">
             <img

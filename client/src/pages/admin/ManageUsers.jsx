@@ -43,17 +43,19 @@ const ManageUsers = () => {
       <div
         className={users?.data?.length === 0 ? "bg-orange h-96" : "bg-orange"}
       >
-        <div className="container mx-auto px-5 py-6">
-          <div className="w-full bg-white px-10 py-5  text-black rounded-md">
+        <div className="container mx-auto px-5 py-6 overflow-hidden">
+          <div className="w-full bg-white px-3 md:px-6 lg:px-10 py-5  text-black rounded-md">
             <div className="flex justify-between border-b pb-8">
-              <h1 className="font-semibold text-2xl">Total Users</h1>
+              <h1 className="font-semibold text-lg md:text-xl lg:text-2xl">
+                Total Users
+              </h1>
               <div className="md:col-span-2 md:px-[30px] ">
                 <div>
                   <button
                     onClick={() => setTab("")}
                     className={`${
                       tab === "" && "bg-orange text-white font-bold"
-                    } p-2 mr-5 px-5 rounded-md text-HeadingColor font-semibold text-[16px] leading-7 border border-solid border-Color`}
+                    } hidden md:inline-block p-1 md:p-2 mr-3 md:mr-5 px-3 md:px-5 rounded-md text-HeadingColor font-semibold text-[12px] md:text-[16px] leading-7 border border-solid border-Color`}
                   >
                     All
                   </button>
@@ -61,7 +63,7 @@ const ManageUsers = () => {
                     onClick={() => setTab("user")}
                     className={`${
                       tab === "user" && "bg-orange text-white font-bold"
-                    } p-2 mr-5 px-5 rounded-md text-HeadingColor font-semibold text-[16px] leading-7 border border-solid border-Color`}
+                    } p-1 md:p-2 mr-3 md:mr-5 px-3 md:px-5 rounded-md text-HeadingColor font-semibold text-[12px] md:text-[16px] leading-7 border border-solid border-Color`}
                   >
                     Users
                   </button>
@@ -69,25 +71,29 @@ const ManageUsers = () => {
                     onClick={() => setTab("admin")}
                     className={`${
                       tab === "admin" && "bg-orange text-white font-bold"
-                    } p-2 mr-5 px-5 rounded-md text-HeadingColor font-semibold text-[16px] leading-7 border border-solid border-Color`}
+                    } p-1 md:p-2 mr-3 md:mr-5 px-3 md:px-5 rounded-md text-HeadingColor font-semibold text-[12px] md:text-[16px] leading-7 border border-solid border-Color`}
                   >
                     Admins
                   </button>
                 </div>
               </div>
-              <h2 className="font-semibold text-2xl">
+              <h2 className="font-semibold text-lg md:text-xl lg:text-2xl">
                 {users?.data?.length || 0} {tab === "admin" ? "Admin" : "Users"}
               </h2>
             </div>
             <div className="mt-10">
-              <table className="min-w-full text-center">
+              <table className="min-w-full text-center ">
                 <thead>
-                  <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                    <th className="py-3 px-6 text-left">User ID</th>
+                  <tr className="bg-gray-200 border-b text-gray-600 uppercase text-sm leading-normal">
+                    <th className="py-3 px-6 text-left hidden md:table-cell">
+                      User ID
+                    </th>
                     <th className="py-3 px-6 ">Name</th>
                     <th className="py-3 px-6 ">Email</th>
                     <th className="py-3 px-6 ">Role</th>
-                    <th className="py-3 px-6 ">Date of Registration</th>
+                    <th className="py-3 px-6 hidden lg:table-cell">
+                      Date of Registration
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="text-gray-600 text-sm ">

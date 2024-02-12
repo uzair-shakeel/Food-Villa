@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import FaqList from "../components/FAQ/FaqList";
 import HomePic from "../assets/Home.png";
 import ChefPic from "../assets/chef.png";
@@ -8,6 +8,11 @@ import NewArrival from "../components/NewArrival";
 import SearchBar from "../shared/SearchBar";
 
 const Home = () => {
+  const [aboutUs, setAboutUs] = useState("About Us");
+
+  const handleAboutUs = () => {
+    setAboutUs("There's nothing, hehe.");
+  };
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -66,7 +71,9 @@ const Home = () => {
                 savor perfection in every bite. Explore unique offerings for
                 memorable moments, tailored just for you."
               </p>
-              <button className="btn md:w-1/3 lg:w-1/4">About Us</button>
+              <button className="button" onClick={handleAboutUs}>
+                {aboutUs}
+              </button>
             </div>
           </div>
         </div>
@@ -77,17 +84,17 @@ const Home = () => {
       {/* Special Section Ends */}
       {/* FAQ Section Starts */}
       <section className="py-3 px-10 sm:px-4 md:px-6">
-        <div className="container">
+        <div className="container h-auto py-6">
           <div className="text-2xl md:text-3xl font-bold text-center text-red lg:text-4xl">
             Food Villa's{" "}
             <span className="text-black">Frequently Asked Questions</span>
           </div>
-          <div className="flex justify-between gap-[50px] lg:gap-0">
+          <div className="flex justify-between md:gap-[50px] lg:gap-0">
             <div className="w-full md:w-1/2">
               <FaqList />
             </div>
             <div className="w-1/2 hidden md:flex md:justify-center">
-              <img src={FaqPic} alt="" className="max-w-full" />
+              <img src={FaqPic} alt="" className="my-20 h-[300px]" />
             </div>
           </div>
         </div>

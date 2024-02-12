@@ -18,7 +18,7 @@ const Orders = ({ item }) => {
         </div>
       </td>
 
-      <td className="py-3 px-6 border-b text-center">
+      <td className="py-3 px-6 border-b text-center hidden md:table-cell">
         <h4 className="font-semibold text-sm">
           {formattedDate} - {time}
         </h4>
@@ -51,7 +51,7 @@ const Orders = ({ item }) => {
         )}
       </td>
 
-      <td className="py-3 px-6 border-b text-center">
+      <td className="py-3 px-6 border-b text-center hidden md:table-cell">
         {item.status === "pending" && (
           <FaStopwatch size={25} className="text-blue-700" />
         )}

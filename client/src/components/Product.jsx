@@ -136,7 +136,7 @@ const Product = () => {
             <img
               src={food.image}
               alt="Home Page Pic"
-              className="h-[350px] max-w-full rounded-lg"
+              className="h-auto md:h-[350px] max-w-full rounded-lg"
             />
           </div>
 

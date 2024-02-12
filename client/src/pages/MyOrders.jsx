@@ -9,39 +9,42 @@ const MyOrders = () => {
   const { user, token } = useContext(AuthContext);
   const [orders, setOrders] = useState(null);
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:3000/order/ordersbyid/${user._id}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
+  {
+    user &&
+      useEffect(() => {
+        const fetchOrders = async () => {
+          try {
+            const response = await fetch(
+              `http://localhost:3000/order/ordersbyid/${user._id}`,
+              {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+              }
+            );
+            if (!response.ok) {
+              console.log("Failed to fetch users");
+              toast.error(response.message);
+            }
+            const data = await response.json();
+            setOrders(data);
+          } catch (error) {
+            toast.error(error.message);
+            setError(error.message);
           }
-        );
-        if (!response.ok) {
-          console.log("Failed to fetch users");
-          toast.error(response.message);
-        }
-        const data = await response.json();
-        setOrders(data);
-      } catch (error) {
-        toast.error(error.message);
-        setError(error.message);
-      }
-    };
+        };
 
-    fetchOrders();
-  }, [user]);
+        fetchOrders();
+      }, [user]);
+  }
 
   return (
     <div className="pt-14">
       <div className={orders?.length === 0 ? "bg-orange h-96" : "bg-orange"}>
         <div className="container mx-auto px-5 py-6">
-          <div className="w-full bg-white px-10 py-5  text-black rounded-md">
+          <div className="w-full bg-white px-2 md:px-10 py-5 overflow-hidden text-black rounded-md">
             <div className=" border-b">
               <div className="flex justify-between pb-8">
                 <h1 className="font-semibold text-2xl">My Orders</h1>
@@ -62,7 +65,7 @@ const MyOrders = () => {
                   <th className="font-semibold text-sm uppercase">
                     No. of Items
                   </th>
-                  <th className="font-semibold text-center text-sm uppercase">
+                  <th className="font-semibold text-center text-sm uppercase hidden md:block">
                     Booking Details
                   </th>
                   <th className="font-semibold text-center text-sm uppercase">

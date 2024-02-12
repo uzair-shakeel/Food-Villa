@@ -8,10 +8,10 @@ const Users = ({ user }) => {
 
   return (
     <tr className="border-b">
-      <td className="py-3 px-6 text-left">{user._id}</td>
-      <td className="py-3 px-6 ">{user.name}</td>
-      <td className="py-3 px-6 ">{user.email}</td>
-      <td className="py-3 px-6 ">
+      <td className="py-3 px-6 text-left hidden md:table-cell">{user._id}</td>
+      <td className="py-3 md:px-6 ">{user.name}</td>
+      <td className="py-3 md:px-6 ">{user.email}</td>
+      <td className="py-3 md:px-6 ">
         {user.role === "user" && (
           <h4 className="font-semibold bg-blue-200 py-2 px-4 rounded-md text-blue-700 text-sm uppercase">
             {user.role}
@@ -23,7 +23,7 @@ const Users = ({ user }) => {
           </h4>
         )}
       </td>
-      <td className="py-3 px-6 ">
+      <td className="py-3 px-6 hidden lg:table-cell">
         {formattedDate} - {time}
       </td>
     </tr>

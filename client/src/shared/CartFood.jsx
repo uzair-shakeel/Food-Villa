@@ -97,50 +97,49 @@ const CartFood = ({ item }) => {
   };
 
   return (
-    <div className="py-3 flex items-center px-6 -mx-8 ">
-      <div className="flex w-3/5">
-        <div className="w-20">
+    <tr className="border-b border-gray-200">
+      <td className="py-3 pr-2 md:px-6 text-left w-2/5">
+        <div className="flex flex-col md:flex-row items-center  gap-4 flex-grow">
           <img
             src={item.product.image}
             alt=""
-            className="h-[50px] w-full object-cover rounded-md"
+            className="h-[30px] md:h-[50px] w-[50px] md:w-20 object-cover rounded-md mr-3"
           />
-        </div>
-        <div className="flex flex-col justify-between ml-4 flex-grow">
-          <div className="font-bold text-sm">{item.product.name}</div>
-          <div className="flex items-center space-x-4">
-            <button onClick={decreaseQuantity}>
-              <FaSquareMinus size={30} />
-            </button>
-            <p className="bg-white px-5 py-2 rounded-md shadow-md">
-              {quantity}
-            </p>
-            <button onClick={increaseQuantity}>
-              <FaSquarePlus size={30} />
-            </button>
+          <div className="font-bold text-xs md:text-sm">
+            {item.product.name}
           </div>
         </div>
-      </div>
-
-      <h4
-        className="
-      font-semibold text- text-sm uppercase w-2/5"
-      >
+      </td>
+      <td className="px-4">
+        <div className="flex items-center justify-center">
+          <button onClick={decreaseQuantity} className="mr-2">
+            <FaSquareMinus size={25} />
+          </button>
+          <p className="bg-white px-3 py-1 rounded-md shadow-md">{quantity}</p>
+          <button onClick={increaseQuantity} className="ml-2">
+            <FaSquarePlus size={25} />
+          </button>
+        </div>
+      </td>
+      <td className="py-3 px-6 text-center hidden md:table-cell">
         {item.product.category}
-      </h4>
-      <h4 className="font-semibold text- text-sm uppercase w-2/5">
+      </td>
+      <td className="py-3 px-6 text-center hidden md:table-cell">
         {item.product.price}
-      </h4>
-      <h4 className="font-semibold text- text-sm uppercase w-2/5">
+      </td>
+      <td className="py-3 px-2 md:px-6 text-center">
         {item.product.price * item.quantity}
-      </h4>
-      <h4
-        className="text-red hover:text-redhover cursor-pointer"
-        onClick={handleRemoveItem}
-      >
-        <FaTrash size={25} />
-      </h4>
-    </div>
+      </td>
+      {/* <td className="py-3 px-6 text-left"></td> */}
+      <td className="py-3 px-2 md:px-6 text-center">
+        <button onClick={handleRemoveItem}>
+          <FaTrash
+            size={20}
+            className="text-red hover:text-redhover hover:scale-125 hover:rotate-6 duration-150"
+          />
+        </button>
+      </td>
+    </tr>
   );
 };
 

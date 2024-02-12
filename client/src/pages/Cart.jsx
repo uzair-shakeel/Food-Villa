@@ -18,6 +18,12 @@ const Cart = () => {
   const { user, token } = useContext(AuthContext);
 
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // This makes the scroll animation smooth
+    });
+  }, []);
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(`http://localhost:3000/cart`, {
@@ -102,57 +108,71 @@ const Cart = () => {
         }
       >
         <div className="container mx-auto px-5 py-6">
-          <div className="w-full bg-white px-10 py-5  text-black rounded-md">
+          <div className="w-full bg-white px-10 py-5 text-black rounded-md">
             <div className="flex justify-between border-b pb-8">
-              <h1 className="font-semibold text-2xl">My Food Cart</h1>
-              <h2 className="font-semibold text-2xl">
+              <h1 className="font-semibold text-lg md:text-xl lg:text-2xl">
+                My Food Cart
+              </h1>
+              <h2 className="font-semibold text-lg md:text-xl lg:text-2xl">
                 {cartData?.data?.items?.length || 0} items
               </h2>
             </div>
-            <div className="mt-10 flex mb-5 text-black/80">
-              <h3 className="font-semibold text- text-sm uppercase w-3/5">
-                Item Name
-              </h3>
-              <h3 className="font-semibold text-sm uppercase w-2/5">
-                Category
-              </h3>
-              <h3 className="font-semibold text-sm uppercase w-2/5">Price</h3>
-              <h3 className="font-semibold  text-sm uppercase w-2/5">
-                Total Amount
-              </h3>
-              <h3>Delete</h3>
-            </div>
-
-            {cartData?.data?.items?.map((item) => {
-              return <CartFood item={item} key={item._id} />;
-            })}
-            {user && cartData && (
-              <div
-                className={
-                  cartData?.data?.items?.length === 0
-                    ? "mx-auto hidden items-end justify-center px-6 flex-col"
-                    : "mx-auto justify-end items-end px-6 flex-col"
-                }
-              >
-                <div className="text-right mb-2 font-semibold text-redhover">
-                  Price: {cartData?.data?.totalPrice}
-                </div>
-                <div className="text-right mb-2 font-semibold text-redhover">
-                  Delivery: {DeliveryFee}
-                </div>
-                <div className="text-right mb-2 font-bold text-redhover">
-                  Total Price: {cartData?.data?.totalPrice + DeliveryFee}
-                </div>
-                <button
-                  onClick={() =>
-                    document.getElementById("my_modal_3").showModal()
+            <div className="mt-10">
+              <table className="w-full">
+                <thead>
+                  <tr className="text-sm w-full px-6 uppercase font-semibold text-left">
+                    <th>Item Name</th>
+                    <th className=" text-center">Quantity</th>
+                    <th className="hidden md:table-cell text-center">
+                      Category
+                    </th>
+                    <th className="text-center hidden md:table-cell">Price</th>
+                    <th className="text-center">Total Amount</th>
+                    <th className="hidden md:table-cell text-center">Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {cartData?.data?.items?.map((item) => (
+                    <CartFood item={item} key={item._id} />
+                  ))}
+                </tbody>
+              </table>
+              {user && cartData && (
+                <div
+                  className={
+                    cartData?.data?.items?.length === 0
+                      ? "mx-auto hidden items-end justify-center px-6 flex-col"
+                      : "mx-auto justify-end items-end px-6 mt-6 flex-col"
                   }
-                  className="button text-center w-full"
                 >
-                  Proceed to Check Out
-                </button>
-              </div>
-            )}
+                  <div className="text-right mb-2 font-semibold text-redhover">
+                    Price: {cartData?.data?.totalPrice}
+                  </div>
+                  <div className="text-right mb-2 font-semibold text-redhover">
+                    Delivery: {DeliveryFee}
+                  </div>
+                  <div className="text-right mb-2 font-bold text-redhover">
+                    Total Price: {totalAmount}
+                  </div>
+                  <button
+                    onClick={() =>
+                      document.getElementById("my_modal_3").showModal()
+                    }
+                    className="hidden md:block button text-center w-full"
+                  >
+                    Proceed to Check Out
+                  </button>
+                  <button
+                    onClick={() =>
+                      document.getElementById("my_modal_3").showModal()
+                    }
+                    className="md:hidden button text-center w-full"
+                  >
+                    Check Out
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -171,15 +191,11 @@ const Cart = () => {
           </p>
           <h4 className="text-center text-sm font-semibold">
             Total Amount:{" "}
-            <span className="text-red text-lg">
-              Rs. {cartData?.data?.totalPrice + DeliveryFee}/-
-            </span>
+            <span className="text-red text-lg">Rs. {totalPrice}/-</span>
           </h4>
-
           {/* Shipping Address */}
           <div className="mb-4">
             <label
-              required
               htmlFor="shippingAddress"
               className="block text-sm font-medium my-3 text-gray-700"
             >
@@ -196,19 +212,14 @@ const Cart = () => {
               required
             ></textarea>
           </div>
-
           {/* Payment Method Selection */}
           <div className="mb-4">
             <label
-              required
               htmlFor="paymentMethod"
               className="block text-sm font-medium text-gray-700"
             >
               Payment Method
             </label>
-            <p className="text-xs text-red">
-              Currently we are only accepting the COD.
-            </p>
             <select
               id="paymentMethod"
               name="paymentMethod"
@@ -216,16 +227,16 @@ const Cart = () => {
               required
             >
               <option value="">Select Payment Method</option>
+              <option value="cash_on_delivery">Cash on Delivery</option>
               <option disabled value="credit_card">
                 Credit Card
               </option>
               <option disabled value="credit_card">
-                Easypaisa
+                EasyPaisa
               </option>
               <option disabled value="credit_card">
-                Jazz Cash
+                JazzCash
               </option>
-              <option value="cash_on_delivery">Cash on Delivery</option>
             </select>
           </div>
 

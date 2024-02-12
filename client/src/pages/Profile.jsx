@@ -111,7 +111,7 @@ const Profile = () => {
             accept="jpeg png jpg"
             onChange={handleImage}
           />
-          <div className="flex gap-4">
+          <div className="flex flex-col md:flex-row gap-4">
             <div className="relative my-4">
               <select
                 value={formData.salutationPreference}
@@ -140,7 +140,7 @@ const Profile = () => {
               <label htmlFor=""></label>
             </div>
           </div>
-          <div className="flex gap-4">
+          <div className="flex flex-col md:flex-row gap-4">
             <div className="relative my-4">
               <select
                 name="gender"

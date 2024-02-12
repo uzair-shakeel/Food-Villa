@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { FaStopwatch, FaCheckCircle, FaCheck } from "react-icons/fa";
+import { TiCancel } from "react-icons/ti";
+import { PiCookingPotFill, PiCookingPot } from "react-icons/pi";
+import { MdCancel } from "react-icons/md";
 
 const Orders = ({ item }) => {
   const createdAtDate = new Date(item.createdAt); // Convert the string to a Date object
@@ -38,7 +42,7 @@ const Orders = ({ item }) => {
 
   return (
     <tr>
-      <td className="py-3 px-6 border-b text-center font-semibold text- text-sm uppercase ">
+      <td className="py-3 px-6 border-b text-center  text- text-sm uppercase hidden md:table-cell">
         <div className="flex items-center">
           <div className="w-[50px]">
             <img
@@ -47,18 +51,19 @@ const Orders = ({ item }) => {
               alt=""
             />
           </div>
-          <div className="ml-4 font-bold text-sm">
+          <div className="ml-4 text-sm">
             {item?.user?.name} / {item?.user?.email}
           </div>
         </div>
       </td>
-      <td className="py-3 px-6 border-b text-center font-semibold text- text-sm uppercase ">
-        {item?.totalAmount}
+      <td className="py-3 px-2 md:px-6 border-b text-center text-xs md:text-sm uppercase ">
+        {item?.products?.map((product) => (
+          <div key={product._id}>
+            {product?.product?.name || product?.name} - {product?.qty}
+          </div>
+        ))}
       </td>
-      <td className="py-3 px-6 border-b text-center font-semibold text- text-sm uppercase ">
-        {formattedDate} - {time}
-      </td>
-      <td className="py-3 px-6 border-b text-center font-semibold text- text-sm uppercase ">
+      <td className="hidden md:table-cell py-3 px-2 md:px-6 border-b text-center  text-sm uppercase ">
         {item?.status === "pending" && (
           <h4 className="font-semibold bg-blue-200 py-2 px-4 rounded-md text-blue-700 text-sm uppercase">
             {item?.status}
@@ -80,16 +85,30 @@ const Orders = ({ item }) => {
           </h4>
         )}
       </td>
+      <td className="py-3 px-6 border-b text-center text-xs table-cell md:hidden">
+        {item.status === "pending" && (
+          <FaStopwatch size={17} className="text-blue-700" />
+        )}
+        {item.status === "processing" && (
+          <PiCookingPotFill size={17} className="text-[#5F6F52]" />
+        )}
+        {item.status === "completed" && (
+          <FaCheckCircle size={17} className="text-green-700" />
+        )}
+        {item.status === "cancelled" && (
+          <MdCancel size={17} className="text-redhover" />
+        )}
+      </td>
+      <td className="py-3 px-2 md:px-6 border-b text-center text-xs md:text-sm uppercase ">
+        {item?.totalAmount}
+      </td>
+      <td className="py-3 px-2 md:px-6 border-b text-center text-xs md:text-sm uppercase hidden lg:table-cell ">
+        {formattedDate} - {time}
+      </td>
 
       {/* <td className="py-3 px-6 border-b text-center">{item?.status}</td> */}
-      <td className="py-3 px-6 border-b text-center font-semibold text- text-sm uppercase ">
-        {item?.products?.map((product) => (
-          <div key={product._id}>
-            {product?.product?.name || product?.name} - {product?.qty}
-          </div>
-        ))}
-      </td>
-      <td className="py-3 px-6 border-b text-center">
+
+      <td className="py-3 px-2 md:px-6 border-b text-center hidden lg:table-cell">
         {item.status === "pending" ? (
           <div className="flex gap-2">
             <button
@@ -112,6 +131,33 @@ const Orders = ({ item }) => {
             className="buttonn bg-blue-700 w-full text-white"
           >
             Ready?
+          </button>
+        ) : null}
+      </td>
+
+      <td className="py-3 px-2 md:px-6 border-b text-center table-cell lg:hidden">
+        {item.status === "pending" ? (
+          <div className="flex gap-2">
+            <button
+              onClick={() => handleStatusChange("processing")}
+              className="rounded-md px-2 py-2 hover:rounded-lg bg-green-700 text-white w-full"
+            >
+              <FaCheck size={14} />
+            </button>
+            <button
+              onClick={() => handleStatusChange("cancelled")}
+              className="rounded-md px-2 py-2 hover:rounded-lg bg-red text-white w-full"
+            >
+              <TiCancel size={17} />
+            </button>
+          </div>
+        ) : null}
+        {item.status === "processing" ? (
+          <button
+            onClick={() => handleStatusChange("completed")}
+            className="buttonn bg-blue-700 w-full text-white"
+          >
+            <PiCookingPot size={17} />
           </button>
         ) : null}
       </td>
