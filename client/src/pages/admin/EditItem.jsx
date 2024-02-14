@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import img from "../../assets/loginPic.jpg";
+import img from "../../assets/LoginPic.jpg";
 import { toast } from "react-toastify";
 import useFetch from "../../hooks/useFetch";
 import { AuthContext } from "../../context/authContext";
