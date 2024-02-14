@@ -42,7 +42,7 @@ const Orders = ({ item }) => {
 
   return (
     <tr>
-      <td className="py-3 px-6 border-b text-center  text- text-sm uppercase hidden md:table-cell">
+      <td className="py-3 px-6 border-b text-center   text-sm uppercase table-cell">
         <div className="flex items-center">
           <div className="w-[50px]">
             <img
@@ -102,7 +102,7 @@ const Orders = ({ item }) => {
       <td className="py-3 px-2 md:px-6 border-b text-center text-xs md:text-sm uppercase ">
         {item?.totalAmount}
       </td>
-      <td className="py-3 px-2 md:px-6 border-b text-center text-xs md:text-sm uppercase hidden lg:table-cell ">
+      <td className="py-3 px-2 md:px-6 border-b text-center text-xs md:text-sm uppercase hidden md:table-cell ">
         {formattedDate} - {time}
       </td>
 

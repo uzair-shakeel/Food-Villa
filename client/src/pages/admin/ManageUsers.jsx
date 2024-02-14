@@ -91,17 +91,15 @@ const ManageUsers = () => {
                 {users?.data?.length || 0} {tab === "admin" ? "Admin" : "Users"}
               </h2>
             </div>
-            <div className="mt-10">
-              <table className="min-w-full text-center ">
+            <div className="mt-10 overflow-x-auto">
+              <table className="w-[120%] lg:w-full text-center ">
                 <thead>
                   <tr className="bg-gray-200 border-b text-gray-600 uppercase text-sm leading-normal">
-                    <th className="py-3 px-6 text-left hidden md:table-cell">
-                      User ID
-                    </th>
+                    <th className="py-3 px-6 text-left table-cell">User ID</th>
                     <th className="py-3 px-6 ">Name</th>
                     <th className="py-3 px-6 ">Email</th>
                     <th className="py-3 px-6 ">Role</th>
-                    <th className="py-3 px-6 hidden lg:table-cell">
+                    <th className="py-3 px-6 table-cell">
                       Date of Registration
                     </th>
                   </tr>

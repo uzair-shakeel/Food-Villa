@@ -109,11 +109,11 @@ const ManageOrders = () => {
                 {orders?.data?.length || 0} {status}
               </h2>
             </div>
-            <div className="mt-10">
-              <table className="mt-10 w-full mb-5 text-black/80">
+            <div className="mt-10 table-box overflow-x-auto">
+              <table className="mt-10 w-[120%] lg:w-full mb-5 text-black/80 ">
                 <thead>
                   <tr className="bg-gray-200 border-b text-gray-600 uppercase text-sm leading-normal">
-                    <th className="font-semibold text-sm uppercase hidden md:table-cell">
+                    <th className="font-semibold text-sm uppercase table-cell">
                       User Name / Email
                     </th>
                     <th className="font-semibold py-2 text-center text-sm uppercase">

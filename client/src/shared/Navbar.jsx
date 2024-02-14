@@ -45,6 +45,10 @@ const Navbar = () => {
   const handleNav = () => {
     setNav(!nav);
   };
+  const handleLogin = () => {
+    setNav(false);
+    console.log("nav");
+  };
 
   const handleLogout = () => {
     dispatch({
@@ -586,7 +590,7 @@ const Navbar = () => {
                     Logout
                   </button>
                 ) : (
-                  <Link className="button" to={"/login"} onClick={handleNav}>
+                  <Link className="button" to={"/login"} onClick={handleLogin}>
                     Login
                   </Link>
                 )}
