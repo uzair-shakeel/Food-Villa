@@ -33,3 +33,7 @@ app.use("/cart", cartRoutes);
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+app.get("/", (req, res) => {
+  res.send("Welcome to the homepage!"); // Sending a message to the root page
+});
