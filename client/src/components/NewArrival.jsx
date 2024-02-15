@@ -3,7 +3,9 @@ import useFetch from "../hooks/useFetch";
 import FoodCard from "../components/FoodCard";
 
 const NewArrival = () => {
-  const { apiData: foods, error } = useFetch(`http://localhost:3000/food/new`);
+  const BASE_URL = process.env.BASE_URL;
+  const { apiData: foods, error } = useFetch(`${BASE_URL}/food/new`);
+  console.log(BASE_URL);
   return (
     <section className="py-3 px-10 sm:px-4 md:px-6">
       <div className="container mx-auto py-[2vh]">
