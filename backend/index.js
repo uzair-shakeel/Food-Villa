@@ -19,7 +19,12 @@ mongoose
   .catch((err) => console.log(err));
 
 // Middleware for CORS and JSON parsing
-app.use(cors()); // Enable CORS for all routes
+app.use(
+  cors({
+    origin: "food-villa-five.vercel.app",
+  })
+);
+
 app.use(express.json({ limit: "3mb" }));
 
 // Routes
