@@ -21,9 +21,16 @@ mongoose
 // Middleware for CORS and JSON parsing
 app.use(
   cors({
+<<<<<<< HEAD
     origin: "https://food-villa-five.vercel.app",
   })
 ); // Enable CORS for all routes
+=======
+    origin: "food-villa-five.vercel.app",
+  })
+);
+
+>>>>>>> 103a6785b45600f01f1e89edee47a104ec34990f
 app.use(express.json({ limit: "3mb" }));
 
 // Routes

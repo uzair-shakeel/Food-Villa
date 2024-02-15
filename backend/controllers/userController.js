@@ -1,5 +1,5 @@
 const User = require("../models/user");
-const bcrypt = require("bcrypt");
+const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const generateToken = (user) => {
@@ -24,7 +24,7 @@ exports.registerUser = async (req, res) => {
     }
 
     // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcryptjs.hash(password, 10);
 
     // Check if the error is due to duplicate key (email already exists)
     const existingUser = await User.findOne({ email });
@@ -67,7 +67,7 @@ exports.loginUser = async (req, res) => {
     }
 
     // Check if password is correct
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    const passwordMatch = await bcryptjs.compare(password, user.password);
 
     if (!passwordMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
