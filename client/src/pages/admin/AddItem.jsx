@@ -26,14 +26,17 @@ const AddItem = () => {
     category: "",
     image: "",
   });
-
   const handleImage = async (e) => {
     const file = e.target.files[0];
     let formData = new FormData();
     formData.append("image", file);
     // setUploading(true);
     try {
-      const { data } = await axios.post(`${BASE_URL}/images/upload`, formData);
+      const response = await fetch(`${BASE_URL}/images/upload`, {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
       // setUploading(false);
       setImage({
         url: data.url,
