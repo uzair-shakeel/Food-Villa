@@ -1,5 +1,5 @@
 const Cart = require("../models/cartSchema");
-const Food = require("../models/FoodSchema");
+const Food = require("../models/foodSchema");
 
 // Controller to get user's cart
 const getUserCart = async (req, res) => {
