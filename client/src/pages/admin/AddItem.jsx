@@ -34,7 +34,7 @@ const AddItem = () => {
     // setUploading(true);
     try {
       const { data } = await axios.post(`${BASE_URL}/images/upload`, formData);
-      setUploading(false);
+      // setUploading(false);
       setImage({
         url: data.url,
         public_id: data.public_id,
