@@ -1,9 +1,9 @@
 import React from "react";
 import useFetch from "../hooks/useFetch";
 import FoodCard from "../components/FoodCard";
-import BASE_URL from "../utils/config.js";
 
 const RecommendedFood = () => {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
   const { apiData: foods, error } = useFetch(`${BASE_URL}/food/elite`);
   console.log(BASE_URL);
   return (
