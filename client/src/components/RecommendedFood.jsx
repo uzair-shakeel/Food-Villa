@@ -3,9 +3,9 @@ import useFetch from "../hooks/useFetch";
 import FoodCard from "../components/FoodCard";
 
 const RecommendedFood = () => {
-  const { apiData: foods, error } = useFetch(
-    `http://localhost:3000/food/elite`
-  );
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+  const { apiData: foods, error } = useFetch(`${BASE_URL}/food/elite`);
+
   return (
     <section className="py-3 px-10 sm:px-4 md:px-6">
       <div className="container mx-auto py-[2vh]">
