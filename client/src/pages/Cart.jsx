@@ -4,6 +4,7 @@ import CartFood from "../shared/CartFood";
 import { AuthContext } from "../context/authContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import BASE_URL from "../utils/config";
 
 const Cart = () => {
   const [address, setAddress] = useState("");
@@ -26,7 +27,7 @@ const Cart = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/cart`, {
+        const response = await fetch(`${BASE_URL}/cart`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -75,7 +76,7 @@ const Cart = () => {
           totalAmount,
           shippingAddress: address,
         };
-        const response = await fetch(`http://localhost:3000/order/`, {
+        const response = await fetch(`${BASE_URL}/order/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

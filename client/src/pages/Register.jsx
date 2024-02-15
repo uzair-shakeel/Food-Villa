@@ -4,6 +4,7 @@ import img from "../assets/register.jpg";
 import avatar from "../assets/avatar.png";
 import axios from "axios";
 import { toast } from "react-toastify";
+import BASE_URL from "../utils/config";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -23,10 +24,7 @@ const Register = () => {
     formData.append("image", file);
     // setUploading(true);
     try {
-      const { data } = await axios.post(
-        `http://localhost:3000/images/upload`,
-        formData
-      );
+      const { data } = await axios.post(`${BASE_URL}/images/upload`, formData);
       // setUploading(false);
       setImage({
         url: data.url,
@@ -47,7 +45,7 @@ const Register = () => {
     };
 
     try {
-      const response = await fetch(`http://localhost:3000/user/register`, {
+      const response = await fetch(`${BASE_URL}/user/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import img from "../../assets/LoginPic.jpg";
 import axios from "axios";
 import { toast } from "react-toastify";
+import BASE_URL from "../../utils/config";
 
 const AddItem = () => {
   const navigate = useNavigate();
@@ -32,10 +33,7 @@ const AddItem = () => {
     formData.append("image", file);
     // setUploading(true);
     try {
-      const { data } = await axios.post(
-        `http://localhost:3000/images/upload`,
-        formData
-      );
+      const { data } = await axios.post(`${BASE_URL}/images/upload`, formData);
       // setUploading(false);
       setImage({
         url: data.url,
@@ -63,7 +61,7 @@ const AddItem = () => {
     };
 
     try {
-      const response = await fetch(`http://localhost:3000/food/create`, {
+      const response = await fetch(`${BASE_URL}/food/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -3,6 +3,7 @@ import useFetch from "../../hooks/useFetch";
 import Users from "../../shared/Users";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../context/authContext";
+import BASE_URL from "../../utils/config";
 
 const ManageUsers = () => {
   const [tab, setTab] = useState("");
@@ -14,7 +15,7 @@ const ManageUsers = () => {
     const fetchUsers = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/user/getAllUsers?role=${tab}`,
+          `${BASE_URL}/user/getAllUsers?role=${tab}`,
           {
             method: "GET",
             headers: {

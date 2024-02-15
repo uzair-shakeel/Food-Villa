@@ -4,6 +4,7 @@ import { useCartContext } from "../../context/cartContext";
 import { FaCartPlus, FaStar } from "react-icons/fa";
 import { AuthContext } from "../../context/authContext";
 import { toast } from "react-toastify";
+import BASE_URL from "../../utils/config";
 
 const ItemsCard = ({ item }) => {
   const { addToCart } = useCartContext();
@@ -11,7 +12,7 @@ const ItemsCard = ({ item }) => {
 
   const deleteItem = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/food/${item._id}`, {
+      const response = await fetch(`${BASE_URL}/food/${item._id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

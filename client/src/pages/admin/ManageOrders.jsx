@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../context/authContext";
 import AdminOrders from "../../shared/AdminOrders";
+import BASE_URL from "../../utils/config";
 
 const ManageOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -12,16 +13,13 @@ const ManageOrders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/order?status=${status}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await fetch(`${BASE_URL}/order?status=${status}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
         if (!response.ok) {
           console.log("Failed to fetch orders");
           toast.error(response.message);

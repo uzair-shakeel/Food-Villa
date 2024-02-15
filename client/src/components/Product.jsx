@@ -6,6 +6,7 @@ import NewArrival from "./NewArrival";
 import { useCartContext } from "../context/cartContext";
 import { AuthContext } from "../context/authContext";
 import { toast } from "react-toastify";
+import BASE_URL from "../utils/config";
 
 const Product = () => {
   // Get the id from the URL parameters
@@ -13,9 +14,7 @@ const Product = () => {
   const navigate = useNavigate();
 
   // Fetch data based on the id
-  const { apiData: food, error } = useFetch(
-    `http://localhost:3000/food/foods/${id}`
-  );
+  const { apiData: food, error } = useFetch(`${BASE_URL}/food/foods/${id}`);
 
   // Initialize quantity state with a default value of 1
   const [quantity, setQuantity] = useState(1);
@@ -28,7 +27,7 @@ const Product = () => {
       toast.error("Please Login First");
     } else {
       try {
-        const response = await fetch("http://localhost:3000/cart/add", {
+        const response = await fetch(`${BASE_URL}/cart/add`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -69,7 +68,7 @@ const Product = () => {
       toast.error("Please Login First");
     } else {
       try {
-        const response = await fetch("http://localhost:3000/cart/add", {
+        const response = await fetch(`${BASE_URL}/cart/add`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

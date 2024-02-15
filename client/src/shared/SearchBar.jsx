@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import BASE_URL from "../utils/config";
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -13,7 +14,7 @@ const SearchBar = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:3000/food/search?keyword=${searchTerm}`
+        `${BASE_URL}/food/search?keyword=${searchTerm}`
       );
       const result = await response.json();
       if (response.ok) {

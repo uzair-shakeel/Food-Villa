@@ -3,6 +3,7 @@ import useFetch from "../hooks/useFetch";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import BASE_URL from "../utils/config";
 
 const Crousal = () => {
   const settings = {
@@ -15,7 +16,7 @@ const Crousal = () => {
     autoplaySpeed: 1000,
     cssEase: "linear",
   };
-  const { apiData: foods, error } = useFetch(`http://localhost:3000/food`);
+  const { apiData: foods, error } = useFetch(`${BASE_URL}/food`);
 
   // Check if foods is still undefined
   if (!foods) {

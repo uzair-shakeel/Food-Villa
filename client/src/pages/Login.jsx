@@ -3,9 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import img from "../assets/register.jpg";
 import { toast } from "react-toastify";
 import { AuthContext } from "../context/authContext";
+import BASE_URL from "../utils/config";
 
 const Login = () => {
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
   const { dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({

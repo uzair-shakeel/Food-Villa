@@ -4,6 +4,7 @@ import useFetch from "../hooks/useFetch";
 import Orders from "../shared/Orders";
 import { AuthContext } from "../context/authContext";
 import { toast } from "react-toastify";
+import BASE_URL from "../utils/config";
 
 const MyOrders = () => {
   const { user, token } = useContext(AuthContext);
@@ -15,7 +16,7 @@ const MyOrders = () => {
         const fetchOrders = async () => {
           try {
             const response = await fetch(
-              `http://localhost:3000/order/ordersbyid/${user._id}`,
+              `${BASE_URL}/order/ordersbyid/${user._id}`,
               {
                 method: "GET",
                 headers: {

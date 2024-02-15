@@ -4,6 +4,7 @@ import { FaStopwatch, FaCheckCircle, FaCheck } from "react-icons/fa";
 import { TiCancel } from "react-icons/ti";
 import { PiCookingPotFill, PiCookingPot } from "react-icons/pi";
 import { MdCancel } from "react-icons/md";
+import BASE_URL from "../utils/config";
 
 const Orders = ({ item }) => {
   const createdAtDate = new Date(item.createdAt); // Convert the string to a Date object
@@ -14,17 +15,14 @@ const Orders = ({ item }) => {
   const handleStatusChange = async (newStatus) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(
-        `http://localhost:3000/order/orders/${item._id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ status: newStatus }), // Send the new status in the request body
-        }
-      );
+      const response = await fetch(`${BASE_URL}/order/orders/${item._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ status: newStatus }), // Send the new status in the request body
+      });
       const { message } = await response.json();
       console.log(message);
       if (response.ok) {

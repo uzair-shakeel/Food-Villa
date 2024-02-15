@@ -5,6 +5,7 @@ import avatar from "../assets/avatar.png";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { AuthContext } from "../context/authContext";
+import BASE_URL from "../utils/config";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -26,10 +27,7 @@ const Profile = () => {
     formData.append("image", file);
     // setUploading(true);
     try {
-      const { data } = await axios.post(
-        `http://localhost:3000/images/upload`,
-        formData
-      );
+      const { data } = await axios.post(`${BASE_URL}/images/upload`, formData);
       // setUploading(false);
       setImage({
         url: data.url,
@@ -49,7 +47,7 @@ const Profile = () => {
       profileImage: image?.url,
     };
     try {
-      const response = await fetch(`http://localhost:3000/user/update`, {
+      const response = await fetch(`${BASE_URL}/user/update`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

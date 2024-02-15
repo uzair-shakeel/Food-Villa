@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaSquareMinus, FaSquarePlus, FaTrash } from "react-icons/fa6";
 import { toast } from "react-toastify";
+import BASE_URL from "../utils/config";
 
 const CartFood = ({ item }) => {
   const [error, setError] = useState(null);
@@ -10,7 +11,7 @@ const CartFood = ({ item }) => {
   const increaseQuantity = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/cart/update/${item.product._id}`,
+        `${BASE_URL}/cart/update/${item.product._id}`,
         {
           method: "PUT",
           headers: {
@@ -43,7 +44,7 @@ const CartFood = ({ item }) => {
     if (newQuantity >= 1) {
       try {
         const response = await fetch(
-          `http://localhost:3000/cart/update/${item.product._id}`,
+          `${BASE_URL}/cart/update/${item.product._id}`,
           {
             method: "PUT",
             headers: {
@@ -75,7 +76,7 @@ const CartFood = ({ item }) => {
   const handleRemoveItem = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/cart/remove/${item.product._id}`, // Assuming this is the correct endpoint
+        `${BASE_URL}/cart/remove/${item.product._id}`, // Assuming this is the correct endpoint
         {
           method: "DELETE",
           headers: {

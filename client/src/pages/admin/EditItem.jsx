@@ -5,15 +5,14 @@ import img from "../../assets/LoginPic.jpg";
 import { toast } from "react-toastify";
 import useFetch from "../../hooks/useFetch";
 import { AuthContext } from "../../context/authContext";
+import BASE_URL from "../../utils/config";
 
 const EditItem = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { token } = useContext(AuthContext);
   const [image, setImage] = useState({});
-  const { apiData: item, error } = useFetch(
-    `http://localhost:3000/food/foods/${id}`
-  );
+  const { apiData: item, error } = useFetch(`${BASE_URL}/food/foods/${id}`);
   const [uploading, setUploading] = useState(false);
   const categories = [
     "Fastfood",
@@ -51,10 +50,7 @@ const EditItem = () => {
     imageData.append("image", file);
     // setUploading(true);
     try {
-      const { data } = await axios.post(
-        `http://localhost:3000/images/upload`,
-        imageData
-      );
+      const { data } = await axios.post(`${BASE_URL}/images/upload`, imageData);
       // setUploading(false);
       setImage({
         url: data.url,
@@ -77,7 +73,7 @@ const EditItem = () => {
     };
 
     try {
-      const response = await fetch(`http://localhost:3000/food/${id}`, {
+      const response = await fetch(`${BASE_URL}/food/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

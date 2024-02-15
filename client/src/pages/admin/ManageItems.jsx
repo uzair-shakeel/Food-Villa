@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useFetch from "../../hooks/useFetch";
 import ItemsCard from "../../components/Admin/ItemsCard";
+import BASE_URL from "../../utils/config";
 
 const ManageItems = () => {
   // const [foods, setFoods] = useState([]);
@@ -11,7 +12,7 @@ const ManageItems = () => {
     value: "",
   });
   const { apiData: foods, error } = useFetch(
-    `http://localhost:3000/food?category=${value.value}`
+    `${BASE_URL}/food?category=${value.value}`
   );
   const categories = [
     { id: 0, name: "All", value: "" },

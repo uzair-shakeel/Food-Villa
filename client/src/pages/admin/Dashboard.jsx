@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import { AuthContext } from "../../context/authContext";
 import { toast } from "react-toastify";
+import BASE_URL from "../../utils/config";
 
 const Dashboard = () => {
   const { token } = useContext(AuthContext);
@@ -12,15 +13,13 @@ const Dashboard = () => {
   const [totalCompletedOrders, setTotalCompletedOrders] = useState();
   const [totalCancelledOrders, setTotalCancelledOrders] = useState();
   console.log(totalOrders);
-  const { apiData: totalItems } = useFetch(`http://localhost:3000/food`);
-  const { apiData: totalUsers } = useFetch(
-    `http://localhost:3000/user/getAllUsers`
-  );
+  const { apiData: totalItems } = useFetch(`${BASE_URL}/food`);
+  const { apiData: totalUsers } = useFetch(`${BASE_URL}/user/getAllUsers`);
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/order`, {
+        const response = await fetch(`${BASE_URL}/order`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -41,16 +40,13 @@ const Dashboard = () => {
 
     const fetchPendingOrders = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/order?status=pending`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await fetch(`${BASE_URL}/order?status=pending`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
         if (!response.ok) {
           console.log("Failed to fetch users");
           toast.error(response.message);
@@ -64,16 +60,13 @@ const Dashboard = () => {
 
     const fetchReceivedOrders = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/order?status=processing`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await fetch(`${BASE_URL}/order?status=processing`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
         if (!response.ok) {
           console.log("Failed to fetch users");
           toast.error(response.message);
@@ -87,16 +80,13 @@ const Dashboard = () => {
 
     const fetchCompletedOrders = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/order?status=completed`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await fetch(`${BASE_URL}/order?status=completed`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
         if (!response.ok) {
           console.log("Failed to fetch users");
           toast.error(response.message);
@@ -110,16 +100,13 @@ const Dashboard = () => {
 
     const fetchCancelledOrders = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/order?status=cancelled`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await fetch(`${BASE_URL}/order?status=cancelled`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
         if (!response.ok) {
           console.log("Failed to fetch users");
           toast.error(response.message);

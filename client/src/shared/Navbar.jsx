@@ -6,6 +6,7 @@ import { IoClose } from "react-icons/io5";
 import { AuthContext } from "../context/authContext";
 import { toast } from "react-toastify";
 import { useCartContext } from "../context/cartContext";
+import BASE_URL from "../utils/config";
 
 const Navbar = () => {
   const { user, dispatch, token } = useContext(AuthContext);
@@ -16,7 +17,7 @@ const Navbar = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/cart`, {
+        const response = await fetch(`${BASE_URL}/cart`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,

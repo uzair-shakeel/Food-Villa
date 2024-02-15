@@ -4,6 +4,7 @@ import { useCartContext } from "../context/cartContext";
 import { FaCartPlus, FaStar } from "react-icons/fa";
 import { AuthContext } from "../context/authContext";
 import { toast } from "react-toastify";
+import BASE_URL from "../utils/config";
 
 const FoodCard = ({ item }) => {
   const { user, token } = useContext(AuthContext);
@@ -14,7 +15,7 @@ const FoodCard = ({ item }) => {
       toast.error("Please Login First");
     } else {
       try {
-        const response = await fetch("http://localhost:3000/cart/add", {
+        const response = await fetch(`${BASE_URL}/cart/add`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

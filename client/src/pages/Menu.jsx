@@ -10,6 +10,7 @@ import chinese from "../assets/menu/chinese.png";
 import italian from "../assets/menu/italian.png";
 import desert from "../assets/menu/desert.png";
 import all from "../assets/menu/Home.png";
+import BASE_URL from "../utils/config";
 
 const Menu = () => {
   // const [foods, setFoods] = useState([]);
@@ -20,7 +21,7 @@ const Menu = () => {
     value: "",
   });
   const { apiData: foods, error } = useFetch(
-    `http://localhost:3000/food?category=${value.value}`
+    `${BASE_URL}/food?category=${value.value}`
   );
   const categories = [
     { id: 0, name: "All", value: "", img: all },
