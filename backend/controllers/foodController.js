@@ -52,6 +52,7 @@ exports.createFood = async (req, res) => {
       category,
       image,
     });
+    console.log(req.body);
     res
       .status(201)
       .json({ data: newFood, message: "Food created successfully" });
