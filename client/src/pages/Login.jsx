@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { AuthContext } from "../context/authContext";
 
 const Login = () => {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
   const { dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -16,7 +17,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:3000/user/Login`, {
+      const response = await fetch(`${BASE_URL}/user/Login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
