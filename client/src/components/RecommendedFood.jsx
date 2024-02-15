@@ -1,11 +1,12 @@
 import React from "react";
 import useFetch from "../hooks/useFetch";
 import FoodCard from "../components/FoodCard";
+import BASE_URL from "../utils/config";
 
 const RecommendedFood = () => {
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
+  // const VITE_SOME_KEY = import.meta.env.VITE_SOME_KEY;
   const { apiData: foods, error } = useFetch(`${BASE_URL}/food/elite`);
-
+  console.log(BASE_URL);
   return (
     <section className="py-3 px-10 sm:px-4 md:px-6">
       <div className="container mx-auto py-[2vh]">

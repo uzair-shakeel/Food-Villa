@@ -1,9 +1,11 @@
 import React from "react";
 import useFetch from "../hooks/useFetch";
 import FoodCard from "../components/FoodCard";
+import BASE_URL from "../utils/config";
 
 const NewArrival = () => {
-  const BASE_URL = process.env.BASE_URL;
+  // const VITE_SOME_KEY = import.meta.env.VITE_SOME_KEY;
+  // const url = process.env.REACT_APP_BASE_URL;
   const { apiData: foods, error } = useFetch(`${BASE_URL}/food/new`);
   console.log(BASE_URL);
   return (
