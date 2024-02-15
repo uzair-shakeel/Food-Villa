@@ -1,4 +1,4 @@
-const Food = require("../models/FoodSchema");
+const Food = require("../models/foodSchema");
 
 exports.getAllFoods = async (req, res) => {
   try {
