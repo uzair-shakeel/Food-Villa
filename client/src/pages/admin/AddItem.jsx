@@ -35,6 +35,7 @@ const AddItem = () => {
       const response = await fetch(`${BASE_URL}/images/upload`, {
         method: "POST",
         body: formData,
+        mode: "no-cors", // Add mode: 'no-cors' option here
       });
       const data = await response.json();
       // setUploading(false);
