@@ -44,7 +44,13 @@ exports.getFoodById = async (req, res) => {
 // Controller to create a new food item
 exports.createFood = async (req, res) => {
   try {
-    const newFood = await Food.create(req.body);
+    const newFood = await Food.create({
+      name,
+      description,
+      price,
+      category,
+      image,
+    });
     res
       .status(201)
       .json({ data: newFood, message: "Food created successfully" });
