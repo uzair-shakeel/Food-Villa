@@ -12,6 +12,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+  console.log(BASE_URL);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
