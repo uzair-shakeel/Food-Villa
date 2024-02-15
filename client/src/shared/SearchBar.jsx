@@ -21,7 +21,7 @@ const SearchBar = () => {
         navigate(`/food/search?keyword=${searchTerm}`, {
           state: result.data,
         });
-        location.reload();
+        // location.reload();
       } else {
         toast.error(result.message);
       }
