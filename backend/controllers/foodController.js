@@ -44,6 +44,9 @@ exports.getFoodById = async (req, res) => {
 // Controller to create a new food item
 exports.createFood = async (req, res) => {
   const { name, description, price, category, image } = req.body;
+  if (image === "" || !image) {
+    res.status(404).json({ message: "Please Upload an Image" });
+  }
   console.log(req.body);
   try {
     const newFood = await Food.create({
