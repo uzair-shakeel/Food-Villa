@@ -19,7 +19,19 @@ mongoose
   .catch((err) => console.log(err));
 
 // Middleware for CORS and JSON parsing
-app.use(cors());
+const allowedOrigins = ["https://food-villa-five.vercel.app"];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  })
+);
 
 const imageCors = cors({
   origin: function (origin, callback) {
@@ -35,10 +47,10 @@ app.use(express.json({ limit: "3mb" }));
 
 // Routes
 app.use("/images", cors(), imageRoutes);
-app.use("/user", cors(), userRoutes);
-app.use("/food", cors(), foodRoutes);
-app.use("/order", cors(), orderRoutes);
-app.use("/cart", cors(), cartRoutes);
+app.use("/user", userRoutes);
+app.use("/food", foodRoutes);
+app.use("/order", orderRoutes);
+app.use("/cart", cartRoutes);
 
 // Start the server
 app.listen(PORT, () => {
