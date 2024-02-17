@@ -41,7 +41,7 @@ const Home = () => {
               <img
                 src={HomePic}
                 alt="Home Page Pic"
-                className="max-h-[500px]"
+                className="max-h-[500px] mx-auto"
               />
             </div>
           </div>

@@ -9,7 +9,6 @@ import BASE_URL from "../utils/config";
 const Register = () => {
   const navigate = useNavigate();
   const [image, setImage] = useState({});
-  const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -24,14 +23,21 @@ const Register = () => {
     formData.append("image", file);
     // setUploading(true);
     try {
-      const { data } = await axios.post(`${BASE_URL}/images/upload`, formData);
+      const response = await fetch(`${BASE_URL}/images/upload`, {
+        method: "POST",
+        body: formData,
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
       // setUploading(false);
       setImage({
         url: data.url,
         public_id: data.public_id,
       });
     } catch (error) {
-      console.log(error);
+      console.error("There was a problem with the fetch operation:", error);
     }
   };
 

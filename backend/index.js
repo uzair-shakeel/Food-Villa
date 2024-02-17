@@ -19,7 +19,12 @@ mongoose
   .catch((err) => console.log(err));
 
 // Middleware for CORS and JSON parsing
-const allowedOrigins = ["https://food-villa-five.vercel.app"];
+const allowedOrigins = [
+  "https://food-villa-five.vercel.app",
+  "https://localhost:5173",
+  "http://localhost:5173/",
+];
+
 app.use(
   cors({
     origin: function (origin, callback) {
