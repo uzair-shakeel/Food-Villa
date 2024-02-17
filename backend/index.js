@@ -19,17 +19,9 @@ mongoose
   .catch((err) => console.log(err));
 
 // Middleware for CORS and JSON parsing
-const allowedOrigins = ["https://food-villa-five.vercel.app"];
-
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: "https://food-villa-five.vercel.app",
   })
 );
 
