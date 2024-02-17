@@ -33,20 +33,10 @@ app.use(
   })
 );
 
-const imageCors = cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-});
-
 app.use(express.json({ limit: "3mb" }));
 
 // Routes
-app.use("/images", cors(), imageRoutes);
+app.use("/images", imageRoutes);
 app.use("/user", userRoutes);
 app.use("/food", foodRoutes);
 app.use("/order", orderRoutes);
