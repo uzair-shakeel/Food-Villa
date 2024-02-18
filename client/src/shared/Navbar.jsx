@@ -47,10 +47,10 @@ const Navbar = () => {
     setNav(!nav);
   };
   const handleLogin = () => {
-    setNav(false);
-    console.log("nav");
+    // Your login logic here
+    console.log("Login link clicked");
+    navigate("/login");
   };
-
   const handleLogout = () => {
     dispatch({
       type: "LOGOUT",
@@ -220,7 +220,11 @@ const Navbar = () => {
                 </div>
               )}
               {user ? null : (
-                <Link to={"/login"} className="button">
+                <Link
+                  to={"/login"}
+                  className="button"
+                  onClick={() => setNav(!nav)}
+                >
                   Login
                 </Link>
               )}
@@ -374,7 +378,11 @@ const Navbar = () => {
                     Logout
                   </button>
                 ) : (
-                  <Link className="button" to={"/login"}>
+                  <Link
+                    className="button"
+                    to={"/login"}
+                    onClick={() => setNav(!nav)}
+                  >
                     Login
                   </Link>
                 )}
@@ -591,7 +599,11 @@ const Navbar = () => {
                     Logout
                   </button>
                 ) : (
-                  <Link className="button" to={"/login"} onClick={handleLogin}>
+                  <Link
+                    className="button"
+                    to={"/login"}
+                    onClick={() => setNav(!nav)}
+                  >
                     Login
                   </Link>
                 )}

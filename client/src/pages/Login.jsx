@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import img from "../assets/register.jpg";
 import { toast } from "react-toastify";
@@ -12,7 +12,13 @@ const Login = () => {
     email: "",
     password: "",
   });
-  console.log(BASE_URL);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
