@@ -46,16 +46,12 @@ const Navbar = () => {
   const handleNav = () => {
     setNav(!nav);
   };
-  const handleLogin = () => {
-    // Your login logic here
-    console.log("Login link clicked");
-    navigate("/login");
-  };
+
   const handleLogout = () => {
     dispatch({
       type: "LOGOUT",
     });
-    handleNav();
+
     toast.success("Logged Out");
     navigate("/");
   };
@@ -64,11 +60,13 @@ const Navbar = () => {
       {user && user.role === "admin" ? null : (
         <div className="userNav py-1 px-10 sm:px-4 md:px-6 lg:px-6 ">
           <div className="container mx-auto flex items-center justify-between ">
-            <img
-              src={logo}
-              alt=""
-              className="h-[60px] w-[60px] cursor-pointer"
-            />
+            <Link to={"/"}>
+              <img
+                src={logo}
+                alt=""
+                className="h-[60px] w-[60px] cursor-pointer"
+              />
+            </Link>
 
             <div className="md:flex gap-8 items-center hidden">
               <Link
