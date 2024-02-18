@@ -14,6 +14,7 @@ const Navbar = () => {
   const [nav, setNav] = useState(false);
   const [cartData, setCartData] = useState(null);
   const [error, setError] = useState(null);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -51,7 +52,7 @@ const Navbar = () => {
     dispatch({
       type: "LOGOUT",
     });
-
+    setNav(!nav);
     toast.success("Logged Out");
     navigate("/");
   };
