@@ -12,8 +12,6 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(bodyParser.json({ limit: "10mb" }));
-app.use(bodyParser.urlencoded({ extended: true, limit: "10mb" }));
 // Connect to MongoDB with updated options
 mongoose
   .connect(process.env.MONGO_URL)
@@ -36,6 +34,8 @@ app.use(
     },
   })
 );
+
+app.use(express.json({ limit: "3mb" }));
 
 // Routes
 app.use("/images", imageRoutes);
