@@ -17,11 +17,18 @@ const Register = () => {
     role: "user",
   });
 
-  const handleImage = async (e) => {
+  const handleImage = (e) => {
     const file = e.target.files[0];
+    // You can perform any additional logic here if needed
+    // For example, checking file size or type
+
+    // Once you've handled any necessary logic, you can call the function to upload the image
+    uploadImage(file);
+  };
+
+  const uploadImage = async (file) => {
     let formData = new FormData();
     formData.append("image", file);
-    // setUploading(true);
     try {
       const response = await fetch(`${BASE_URL}/images/upload`, {
         method: "POST",
@@ -31,7 +38,6 @@ const Register = () => {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
-      // setUploading(false);
       setImage({
         url: data.url,
         public_id: data.public_id,
