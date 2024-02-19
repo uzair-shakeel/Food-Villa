@@ -8,6 +8,11 @@ const orderRoutes = require("./routes/orderRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const dotenv = require("dotenv");
 
+const { initializeApp } = require("firebase/app");
+const config = require("./config/firebase.config");
+
+initializeApp(config.firebaseConfig);
+
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;

@@ -1,14 +1,10 @@
 const express = require("express");
-const ExpressFormidable = require("express-formidable");
-const router = express.Router();
-const { imageController } = require("../controllers/imageController.js");
+const multer = require("multer");
+const imageController = require("../controllers/imageController");
 
-router.post(
-  "/upload",
-  ExpressFormidable({
-    uploadDir: "./temp",
-  }),
-  imageController
-);
+const router = express.Router();
+const upload = multer({ storage: multer.memoryStorage() });
+
+router.post("/upload", upload.single("image"), imageController.uploadImage);
 
 module.exports = router;

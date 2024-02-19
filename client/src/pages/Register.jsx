@@ -32,16 +32,14 @@ const Register = () => {
     try {
       const response = await fetch(`${BASE_URL}/images/upload`, {
         method: "POST",
-        mode: "no-cors", // Set mode to "no-cors"
         body: formData,
       });
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
+
+      console.log(response);
       const data = await response.json();
+      console.log("====>", data);
       setImage({
         url: data.url,
-        public_id: data.public_id,
       });
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
