@@ -32,6 +32,7 @@ const Register = () => {
     try {
       const response = await fetch(`${BASE_URL}/images/upload`, {
         method: "POST",
+        mode: "no-cors", // Set mode to "no-cors"
         body: formData,
       });
       if (!response.ok) {
