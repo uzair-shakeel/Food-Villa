@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import img from "../assets/register.jpg";
 import avatar from "../assets/avatar.png";
-import axios from "axios";
 import { toast } from "react-toastify";
 import BASE_URL from "../utils/config";
 
