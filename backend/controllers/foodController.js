@@ -56,12 +56,10 @@ exports.createFood = async (req, res) => {
       category,
       image,
     });
-    res
-      .status(201)
-      .json({ data: newFood, message: "Food created successfully" });
+    res.status(201).json({ data: newFood, message: "item Added successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal Server Error Create Food" });
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
