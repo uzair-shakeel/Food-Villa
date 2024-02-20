@@ -26,7 +26,7 @@ mongoose
 // Middleware for CORS and JSON parsing
 const allowedOrigins = [
   "https://food-villa-five.vercel.app",
-  "https://food-villa-rho.vercel.app/",
+  "https://food-villa-rho.vercel.app",
   "http://localhost:5173",
 ];
 app.use(
